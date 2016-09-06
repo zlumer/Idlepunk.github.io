@@ -1,14 +1,26 @@
+//Add save support for purchase counts
+//Balance creation rate
+
 var autoSaveCount = 0;
 var dataHacked = 0;
 var totalDataHacked = 0;
+//Cyberdecks
 var cyberdeckNumber = 0;
+var cyberdeckPurchased = 0;
 var cyberdeckUpgradeCount = 0;
+//ICEPicks
 var ICEPickNumber = 0;
+var ICEPickPurchased = 0;
 var ICEPickUpgradeCount = 0;
+//Botnets
 var botnetNumber = 0;
+var botnetPurchased = 0;
 var botnetUpgradeCount = 0;
+//Zombies
 var neuralZombieNumber = 0;
+var neuralZombiePurchased = 0;
 var neuralZombieUpgradeCount = 0;
+//AIs
 var AINumber = 0;
 var AIMultiplier = 1;
 
@@ -201,7 +213,7 @@ function formatBytes(bytes, decimals) {
 window.setInterval(function() {
     increment();
     checkForReveal();
-    autoSaveCount += 1;
+    autoSaveCount ++;
     if (autoSaveCount >= 100) {
         save();
         autoSaveCount = 0;
@@ -277,16 +289,31 @@ function increment() {
     totalDataHacked += (ICEPickNumber * ICEPicksRate);
     HTMLEditor('ICEPickRate', formatBytes(ICEPicksRate * 10));
     HTMLEditor('ICEPickRateTotal', formatBytes(ICEPickIncome));
+    if (ICEPickUpgradeCount >= 4){ //ICEPicks create decks
+    	cyberdeckNumber += ICEPickNumber;
+    	HTMLEditor('ICEPickCyberdeckCreationRate', ICEPickNumber);
+    	HTMLEditor('cyberdeckNumber', cyberdeckNumber);
+    }
     //Botnet
     dataHacked = dataHacked + (botnetNumber * botnetsRate);
     totalDataHacked = totalDataHacked + (botnetNumber * botnetsRate);
     HTMLEditor('botnetRate', formatBytes(botnetsRate * 10));
     HTMLEditor('botnetRateTotal', formatBytes(botnetIncome));
+    if (botnetUpgradeCount >= 4){
+    	ICEPickNumber += botnetNumber;
+    	HTMLEditor('botnetICEPickCreationRate', botnetNumber);
+    	HTMLEditor('ICEPickNumber', ICEPickNumber);
+    }
     //Neural Zombie
     dataHacked = dataHacked + (neuralZombieNumber * neuralZombieRate);
     totalDataHacked = totalDataHacked + (neuralZombieNumber * neuralZombieRate);
     HTMLEditor('neuralZombieRate', formatBytes(neuralZombieRate * 10));
     HTMLEditor('neuralZombieRateTotal', formatBytes(neuralZombieIncome));
+    if (neuralZombieUpgradeCount >= 4){
+    	botnetNumber += neuralZombieNumber;//Creates 1 botnet for every 2 zombies, * 10 so its per second.
+    	HTMLEditor('nerualZombieBotnetCreationRate', neuralZombieNumber);
+    	HTMLEditor('botnetNumber', botnetNumber);
+    }
     //AI
     dataHacked = dataHacked + (AINumber * AIRate);
     totalDataHacked = totalDataHacked + (AINumber * AIRate);
@@ -344,9 +371,9 @@ function changeUpgradeText(input) {
                     HTMLEditor('ICEPickUpgradeDesc', 'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.');
                     break;
                 case 2:
-                    HTMLEditor('ICEPickUpgradeName', 'MOLE Injectors');
+                    HTMLEditor('ICEPickUpgradeName', 'Cyberdeck Simulators');
                     HTMLEditor('ICEPickUpgradeCost', formatBytes(cost));
-                    HTMLEditor('ICEPickUpgradeDesc', 'MOLE was first true cybernetic virus, it has had many iterations over the years, this injects all of them.');
+                    HTMLEditor('ICEPickUpgradeDesc', 'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks.');
                     break;
                 default:
                     HTMLEditor('ICEPickUpgradeName', 'Write new anti-ICE software');
@@ -368,38 +395,38 @@ function changeUpgradeText(input) {
                     HTMLEditor('botnetUpgradeDesc', 'Your bots can now use your ICE Picking software to help infiltration.');
                     break;
                 case 2:
-                    HTMLEditor('botnetUpgradeName', 'Create AutoBotnet');
+                    HTMLEditor('botnetUpgradeName', 'ICEBOTS');
                     HTMLEditor('botnetUpgradeCost', formatBytes(cost));
-                    HTMLEditor('botnetUpgradeDesc', 'Your Bots no longer need to report home, they are free to run wild in cyberspace, returning only to drop off their collected data.');
+                    HTMLEditor('botnetUpgradeDesc', 'Your Botnets can now steal ICE Picks.');
                     break;
                 default:
                     HTMLEditor('botnetUpgradeName', 'Push out new Bot firmware');
                     HTMLEditor('botnetUpgradeCost', formatBytes(cost));
-                    HTMLEditor('botnetUpgradeDesc', 'ONCE TOLD ME THE WORLD IS GONNA HACK ME I AINT THE FASTEST BOT IN THE NET.')
+                    HTMLEditor('botnetUpgradeDesc', 'New Bot-Hunters pop up all the time, new firmware is required to overcome them.')
                     break;
             }
             break;
         case 'neuralZombie':
             switch (neuralZombieUpgradeCount) {
                 case 0:
-                    HTMLEditor('neuralZombieUpgradeName', 'Harambe2');
+                    HTMLEditor('neuralZombieUpgradeName', 'Pre-Setup Zombies');
                     HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
-                    HTMLEditor('neuralZombieUpgradeDesc', 'Harambe2')
+                    HTMLEditor('neuralZombieUpgradeDesc', 'Before you assume control of a Zombie they will feel a strong compulsion to quit their jobs and leave their loved ones.')
                     break;
                 case 1:
-                    HTMLEditor('neuralZombieUpgradeName', 'Harambe3');
+                    HTMLEditor('neuralZombieUpgradeName', 'Long-Life Zombies');
                     HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
-                    HTMLEditor('neuralZombieUpgradeDesc', 'Harambe3')
+                    HTMLEditor('neuralZombieUpgradeDesc', 'You now have enough motor control of your Zombies to make them eat and drink.')
                     break;
                 case 2:
-                    HTMLEditor('neuralZombieUpgradeName', 'Harambe4');
+                    HTMLEditor('neuralZombieUpgradeName', 'Software writing Zombies');
                     HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
-                    HTMLEditor('neuralZombieUpgradeDesc', 'Harambe4')
+                    HTMLEditor('neuralZombieUpgradeDesc', 'Your Zombies now create Botnets.')
                     break;
                 default:
-                    HTMLEditor('neuralZombieUpgradeName', 'Harambe5Eva');
+                    HTMLEditor('neuralZombieUpgradeName', 'Install more RAM');
                     HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
-                    HTMLEditor('neuralZombieUpgradeDesc', 'Harambe5Eva')
+                    HTMLEditor('neuralZombieUpgradeDesc', 'Zombies LOVE RAM')
                     break;
             }
     }
@@ -565,17 +592,21 @@ function buyAI() {
 
 function buyItem(item, baseCost) {
     var itemNumberName = item + 'Number';
+    var itemPurchasedName = item + 'Purchased';
     var itemNumberInt = window[itemNumberName];
-    var cost = Math.floor(baseCost * Math.pow(1.15, itemNumberInt));
+    var itemPurchasedInt = window[itemPurchasedName];
+    var cost = Math.floor(baseCost * Math.pow(1.15, itemPurchasedInt));
     if (dataHacked >= cost) {
         dataHacked -= cost;
         itemNumberInt += 1;
+        itemPurchasedInt += 1;
         HTMLEditor(itemNumberName, itemNumberInt);
         HTMLEditor('dataHacked', formatBytes(dataHacked));
     }
-    var nextCost = Math.floor(baseCost * Math.pow(1.15, itemNumberInt));
+    var nextCost = Math.floor(baseCost * Math.pow(1.15, itemPurchasedInt));
     var itemCost = item + 'Cost';
     HTMLEditor(itemCost, formatBytes(nextCost));
     window[itemNumberName] = itemNumberInt;
+    window[itemPurchasedName] = itemPurchasedInt;
     var i = 1;
 }
