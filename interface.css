@@ -19,14 +19,14 @@ body {
 }
 
 #footer {
-    position: relative;
+    position: absolute;
     bottom: 0;
 }
 
 #footerSave {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 15px;
+    right: 20px;
 }
 
 .title {
@@ -37,6 +37,10 @@ body {
     font-family: Courier;
 }
 
+.heading {
+    margin-left: 10px;
+}
+
 .testleft {
     float: left;
 }
@@ -44,6 +48,7 @@ body {
 .floatRight {
     float: right;
     width: 50%;
+    margin-right: 10px;
 }
 
 hr {
@@ -78,4 +83,23 @@ hr {
 
 .description {
     color: #C70039;
+}
+
+p {
+    margin:0;
+}
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    width: auto;
+    height: auto;
+
+}
+
+.flex-item {
+
+    width: 50%;
+    height: auto;
+    margin: 10px;
 }
