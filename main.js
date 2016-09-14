@@ -62,8 +62,8 @@ function startUp() {
 function save() {
     //Saves these variables to local storage.
     var savegame = {
-        //dataHacked: dataHacked,
-        //totalDataHacked: totalDataHacked,
+        dataHacked: dataHacked,
+        totalDataHacked: totalDataHacked,
         itemList: itemList
     };
     localStorage.setItem('save', JSON.stringify(savegame));
@@ -75,9 +75,12 @@ function load() {
         //item1 = savegame.itemList[0];
         //item2 = savegame.itemList[1];
         //itemList = Object.assign({}, savegame.itemList);
-        for(var k in savegame.itemList) itemList[k]=savegame.itemList[k];
-        var tr = 1;
-        }
+        itemList = savegame.itemList;
+        //for(var k in savegame.itemList) itemList[k]=savegame.itemList[k];
+        //dataHacked = savegame.dataHacked;
+        //totalDataHacked = savegame.totalDataHacked
+        var h = 3;
+    }
     
     refreshUI();
 }
@@ -183,7 +186,7 @@ function refreshUI() {
 
     for (var i = 0; i < itemList.length; i++) {
         var item = itemList[i];
-        changeUpgradeText(item);
+        
         HTMLEditor(item.itemNumberMaxDiv, formatNumbers(maxItem(item)));
         HTMLEditor(item.itemCountDiv, item.itemCount);
         HTMLEditor(item.itemCostDiv, buyCost(item));
@@ -329,129 +332,129 @@ function autoBuy() {
 
 function changeUpgradeText(input) {
     switch (input) {
-        case item1:
-            switch (item1.upgradeCount) {
+        case itemList[0]:
+            switch (itemList[0].upgradeCount) {
                 case 0:
                     HTMLEditor('cyberdeckUpgradeName', 'Install Neural Interfaces');
-                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(item1.upgradeCost));
+                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(itemList[0].upgradeCost));
                     HTMLEditor('cyberdeckUpgradeDesc', 'First developed by triGen Consolidated, the Neural Interface allows humans to traverse cyberspace using nothing but their brains. In addition, atrophied limbs can save you money on food.');
                     break;
                 case 1:
                     HTMLEditor('cyberdeckUpgradeName', 'Flash ZedSoft firmware');
-                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(item1.upgradeCost));
+                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(itemList[0].upgradeCost));
                     HTMLEditor('cyberdeckUpgradeDesc', 'ZedSoft is the most revered Cyberdeck development company in the entire Inner Seoul Arcology. They have an exclusive contract with MILNET-KOREA, making their products difficult to source.');
                     break;
                 case 2:
                     HTMLEditor('cyberdeckUpgradeName', 'Create a clustered Superdeck');
-                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(item1.upgradeCost));
+                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(itemList[0].upgradeCost));
                     HTMLEditor('cyberdeckUpgradeDesc', 'An ancient trick, by networking a large number of Decks together you can create a Superdeck, more powerful than the sum of its parts.');
                     break;
                 default:
                     HTMLEditor('cyberdeckUpgradeName', 'Install more RAM');
-                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(item1.upgradeCost));
+                    HTMLEditor('cyberdeckUpgradeCost', formatBytes(itemList[0].upgradeCost));
                     HTMLEditor('cyberdeckUpgradeDesc', 'Random Access Memory, very powerful but completely unstable. There are rumours that people in the Shenzhen Industrial Area use RAM to augment their biological memory.');
                     break;
             }
             break;
-        case 'ICEPick':
-            switch (ICEPickUpgradeCount + offset) {
+        case itemList[1]:
+            switch (itemList[1].upgradeCount) {
                 case 0:
                     HTMLEditor('ICEPickUpgradeName', 'Prepare BLACKICE Countermeasures');
-                    HTMLEditor('ICEPickUpgradeCost', formatBytes(cost));
+                    HTMLEditor('ICEPickUpgradeCost', formatBytes(itemList[1].upgradeCost));
                     HTMLEditor('ICEPickUpgradeDesc', 'BLACKICE, originally developed to protect the intellectual assets of Meturia-Preva Consolidated, is now a blanket term for security software capable of killing intruders.');
                     break;
                 case 1:
                     HTMLEditor('ICEPickUpgradeName', 'Setup Dummy Interface');
-                    HTMLEditor('ICEPickUpgradeCost', formatBytes(cost));
+                    HTMLEditor('ICEPickUpgradeCost', formatBytes(itemList[1].upgradeCost));
                     HTMLEditor('ICEPickUpgradeDesc', 'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.');
                     break;
                 case 2:
                     HTMLEditor('ICEPickUpgradeName', 'Cyberdeck Simulators');
-                    HTMLEditor('ICEPickUpgradeCost', formatBytes(cost));
+                    HTMLEditor('ICEPickUpgradeCost', formatBytes(itemList[1].upgradeCost));
                     HTMLEditor('ICEPickUpgradeDesc', 'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every 10 ICE Picks, you will generate 1 Cyberdeck each second.');
                     break;
                 default:
                     HTMLEditor('ICEPickUpgradeName', 'Write new anti-ICE software');
-                    HTMLEditor('ICEPickUpgradeCost', formatBytes(cost));
+                    HTMLEditor('ICEPickUpgradeCost', formatBytes(itemList[1].upgradeCost));
                     HTMLEditor('ICEPickUpgradeDesc', 'ICE defense is ever changing, new ICE picking software is always required.');
                     break;
             }
             break;
-        case 'botnet':
-            switch (botnetUpgradeCount + offset) {
+        case itemList[2]:
+            switch (itemList[2].upgradeCount) {
                 case 0:
                     HTMLEditor('botnetUpgradeName', 'Self replicating Botnet');
-                    HTMLEditor('botnetUpgradeCost', formatBytes(cost));
+                    HTMLEditor('botnetUpgradeCost', formatBytes(itemList[2].upgradeCost));
                     HTMLEditor('botnetUpgradeDesc', 'Your Bots can now utilise idle system processing power to create new bots to add to the Botnet.');
                     break;
                 case 1:
                     HTMLEditor('botnetUpgradeName', 'Allow your Botnet to use ICE Picks');
-                    HTMLEditor('botnetUpgradeCost', formatBytes(cost));
+                    HTMLEditor('botnetUpgradeCost', formatBytes(itemList[2].upgradeCost));
                     HTMLEditor('botnetUpgradeDesc', 'Your bots can now use your ICE Picking software to help infiltration.');
                     break;
                 case 2:
                     HTMLEditor('botnetUpgradeName', 'ICEBOTS');
-                    HTMLEditor('botnetUpgradeCost', formatBytes(cost));
+                    HTMLEditor('botnetUpgradeCost', formatBytes(itemList[2].upgradeCost));
                     HTMLEditor('botnetUpgradeDesc', 'Your Botnets can now steal ICE Picks. for every 10 Botnets, you will generate 1 ICE Pick each second.');
                     break;
                 default:
                     HTMLEditor('botnetUpgradeName', 'Push out new Bot firmware');
-                    HTMLEditor('botnetUpgradeCost', formatBytes(cost));
+                    HTMLEditor('botnetUpgradeCost', formatBytes(itemList[2].upgradeCost));
                     HTMLEditor('botnetUpgradeDesc', 'New Bot-Hunters pop up all the time, new firmware is required to overcome them.');
                     break;
             }
             break;
-        case 'neuralZombie':
-            switch (neuralZombieUpgradeCount + offset) {
+        case itemList[3]:
+            switch (itemList[3].upgradeCount) {
                 case 0:
                     HTMLEditor('neuralZombieUpgradeName', 'Pre-Setup Zombies');
-                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
+                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(itemList[3].upgradeCost));
                     HTMLEditor('neuralZombieUpgradeDesc', 'Before you assume control of a Zombie they will feel a strong compulsion to quit their jobs, leave their loved ones and start stockpiling food and water.');
                     break;
                 case 1:
                     HTMLEditor('neuralZombieUpgradeName', 'Long-Life Zombies');
-                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
+                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(itemList[3].upgradeCost));
                     HTMLEditor('neuralZombieUpgradeDesc', 'You now have enough motor control of your Zombies to make them eat and drink.');
                     break;
                 case 2:
                     HTMLEditor('neuralZombieUpgradeName', 'Software writing Zombies');
-                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
+                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(itemList[3].upgradeCost));
                     HTMLEditor('neuralZombieUpgradeDesc', 'Your Zombies can now create Botnets. For every 10 Neural Zombies, you will generate 1 Botnet each second.');
                     break;
                 default:
                     HTMLEditor('neuralZombieUpgradeName', 'Fire adrenaline booster');
-                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(cost));
+                    HTMLEditor('neuralZombieUpgradeCost', formatBytes(itemList[3].upgradeCost));
                     HTMLEditor('neuralZombieUpgradeDesc', 'A nice shot of Neuro-Dren, right into the cortexes.');
                     break;
             }
             break;
-        case 'AI':
-            switch (AIUpgradeCount + offset) {
+        case itemList[4]:
+            switch (itemList[4].upgradeCount) {
                 case 0:
                     HTMLEditor('AIUpgradeName', 'Quantum AI');
-                    HTMLEditor('AIUpgradeCost', formatBytes(cost));
+                    HTMLEditor('AIUpgradeCost', formatBytes(itemList[4].upgradeCost));
                     HTMLEditor('AIUpgradeDesc', 'Allows your AI to use Quantum Bytes instead of regular Bytes.');
                     break;
                 case 1:
                     HTMLEditor('AIUpgradeName', 'AI Consciousness Merge');
-                    HTMLEditor('AIUpgradeCost', formatBytes(cost));
+                    HTMLEditor('AIUpgradeCost', formatBytes(itemList[4].upgradeCost));
                     HTMLEditor('AIUpgradeDesc', 'Shortly before the Stuttgart Autofactory Massacre, Antora Gourova of Antora Gourova Multinational merged her consciousness with an AI in an attempt to assume complete control of every aspect of her company. This has never been attempted since.');
                     break;
                 case 2:
                     HTMLEditor('AIUpgradeName', 'Neural jacking AI');
-                    HTMLEditor('AIUpgradeCost', formatBytes(cost));
+                    HTMLEditor('AIUpgradeCost', formatBytes(itemList[4].upgradeCost));
                     HTMLEditor('AIUpgradeDesc', 'AI capable of hijacking humans, what could go wrong?');
                     break;
                 default:
                     HTMLEditor('AIUpgradeName', 'Grant Transcendence permission');
-                    HTMLEditor('AIUpgradeCost', formatBytes(cost));
+                    HTMLEditor('AIUpgradeCost', formatBytes(itemList[4].upgradeCost));
                     HTMLEditor('AIUpgradeDesc', 'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.');
                     break;
             }
             break;
     }
 }
-function OOPUpgrade(item){
+function Upgrade(item){
     var cost;
     cost = item.upgradeCost * Math.pow(10, item.upgradeCount);
     if (dataHacked >= cost){
@@ -462,7 +465,7 @@ function OOPUpgrade(item){
     }
 }
 
-function OOPBuy(item, count){
+function buyItem(item, count){
     var cost;
     var max = maxItem(item); //temp
     var nextCost;
