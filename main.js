@@ -469,6 +469,31 @@ function changeUpgradeText(input) {
                     HTMLEditor('item4UpgradeDesc', 'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.');
                     break;
             }
+        case itemList[5]:
+            switch (itemList[5].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item5UpgradeName', 'Place Holder');
+                    HTMLEditor('item5UpgradeCost', formatBytes(itemList[5].upgradeCost));
+                    HTMLEditor('item5UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item5UpgradeName', 'Place Holder');
+                    HTMLEditor('item5UpgradeCost', formatBytes(itemList[5].upgradeCost));
+                    HTMLEditor('item5UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item5UpgradeName', 'Place Holder');
+                    HTMLEditor('item5UpgradeCost', formatBytes(itemList[5].upgradeCost));
+                    HTMLEditor('item5UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item5UpgradeName', 'Place Holder');
+                    HTMLEditor('item5UpgradeCost', formatBytes(itemList[5].upgradeCost));
+                    HTMLEditor('item5UpgradeDesc', 'Place Holder');
+                    break;
+            }
             break;
     }
 }
