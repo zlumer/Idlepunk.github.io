@@ -25,46 +25,23 @@ var item = function(name, ID, baseCost, upgradeCost, baseIncome) {
     this.itemUpgradeMenuDiv = this.ID + 'UpgradeMenu';
     this.itemHRDiv = this.ID + 'HR';
 };
-//Item name, item ID, base cost, base upgrade cost, base income.
-/*
-var item0 = new item('cyberdeck',       'item0', 10,        1000,       1);
-var item1 = new item('ICEPick',         'item1', 160,       8000,       8);
-var item2 = new item('botnet',          'item2', 3200,      64000,      64);
-var item3 = new item('neuralZombie',    'item3', 25600,     512000,     512);
-var item4 = new item('AI',              'item4', 102400,    4096000,    4096);
-*/
 //                   name                           ID        cost              Upgrade             Income
-var item0 = new item('Cyberdeck',                   'item0',  10,               1000,               1);
-var item1 = new item('ICE Pick',                    'item1',  110,              11000,              11);
-var item2 = new item('Botnet',                      'item2',  1200,             120000,             120);
-var item3 = new item('Femtocell Hijacker',          'item3',  13000,            1300000,            1300);
-var item4 = new item('Neural TETRA',                'item4',  140000,           14000000,           14000);
-var item5 = new item('Quantum Cryptography',        'item5',  1500000,          150000000,          150000);
-var item6 = new item('Infovault Mining',            'item6',  16000000,         1600000000,         1600000);
-var item7 = new item('Air Gap Jumpers',             'item7',  170000000,        17000000000,        17000000);
-var item8 = new item('Satellite Jumpers',           'item8',  1800000000,       180000000000,       180000000);
-var item9 = new item('Artificial Intelligence',     'item9',  19000000000,      1900000000000,      1900000000);
+var item0  = new item('Cyberdeck',                  'item0',  10,               1000,               1);
+var item1  = new item('ICE Pick',                   'item1',  110,              11000,              11);
+var item2  = new item('Botnet',                     'item2',  1200,             120000,             120);
+var item3  = new item('Femtocell Hijacker',         'item3',  13000,            1300000,            1300);
+var item4  = new item('Neural TETRA',               'item4',  140000,           14000000,           14000);
+var item5  = new item('Quantum Cryptography',       'item5',  1500000,          150000000,          150000);
+var item6  = new item('Infovault Mining',           'item6',  16000000,         1600000000,         1600000);
+var item7  = new item('Air Gap Jumpers',            'item7',  170000000,        17000000000,        17000000);
+var item8  = new item('Satellite Jumpers',          'item8',  1800000000,       180000000000,       180000000);
+var item9  = new item('Artificial Intelligence',    'item9',  19000000000,      1900000000000,      1900000000);
 var item10 = new item('Actual Intelligence',        'item10', 200000000000,     20000000000000,     20000000000);
 var item11 = new item('Dark Matter Semiconductors', 'item11', 2100000000000,    210000000000000,    210000000000);
 var item12 = new item('Simulated Universes',        'item12', 22000000000000,   2200000000000000,   2200000000000);
 
 var itemList = [item0, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12];
-/*
-//Upgrade order name:
-1   Cyberdeck
-2   ICEPick
-3   Botnet
-4   Cyberdeck Femtocell Hijacker
-5   Neural TETRA
-6   Quantum Cryptography
-7   Infovault Mining
-8   Air Gap Jumpers
-9   Satellite Hijacking
-10  Artificial Intelligence
-11  Actual Intelligence
-12  Dark Matter Semiconductors
-13  Simulated Universes
-*/
+
 
 function startUp() {
     //Runs when the page is loaded.
@@ -80,9 +57,6 @@ function startUp() {
         visibilityLoader(item.itemHRDiv, 0);
         visibilityLoader(item.itemUpgradeMenuDiv, 0);
     }
-
-
-
     //Calls the first tick of the game.
     window.requestAnimationFrame(updateGame);
 }
@@ -105,16 +79,16 @@ function load() {
         totalDataHacked = savegame.totalDataHacked //Single var.
         itemList = savegame.itemList; //Loads itemList.
         //ItemList only references items, so they have to be loaded as well.
-        item0 = itemList[0];
-        item1 = itemList[1];
-        item2 = itemList[2];
-        item3 = itemList[3];
-        item4 = itemList[4];
-        item5 = itemList[5];
-        item6 = itemList[6];
-        item7 = itemList[7];
-        item8 = itemList[8];
-        item9 = itemList[9];
+        item0  = itemList[0];
+        item1  = itemList[1];
+        item2  = itemList[2];
+        item3  = itemList[3];
+        item4  = itemList[4];
+        item5  = itemList[5];
+        item6  = itemList[6];
+        item7  = itemList[7];
+        item8  = itemList[8];
+        item9  = itemList[9];
         item10 = itemList[10];
         item11 = itemList[11];
         item12 = itemList[12];
