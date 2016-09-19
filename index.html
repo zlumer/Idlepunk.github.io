@@ -6,116 +6,277 @@
 </head>
 <body class='all' id='all'>
     <div class='heading'>
-        IDLEPUNK 0.3.4 - Limitations
+        IDLEPUNK 0.4.0 - Breakin ur saves lol
     </div>
     <hr>
     <p class='heading'>Total Data Hacked: <span class='number' id='totalDataHacked'>0 Bytes</span></p>
     <p class='heading'>Data Avaliable: <span class='number' id='dataHacked'>10 Bytes</span></p>
     <hr>
     <p class='heading'>Total income rate: <span class='number' id="totalIncome">0</span> per second</p>
-    <--<p><span class='clickRed' onclick='jackIn(1000000000000);'>CHEAT</span></p> -->
+    <--<p><span class='clickRed' onclick='jackIn(10000);'>CHEAT</span></p> -->
     <!-- Cyberdeck -->
-    <hr id='cyberdeckHR'>
+    <hr id='item0HR'>
     <div class="flex-container">
         <!-- Cyberdeck Buy Menu -->
-        <div class="flex-item" id='cyberdeckMenu'>
+        <div class="flex-item" id='item0Menu'>
             <p>Buy a <span class='clickRed' onclick="buyItem(itemList[0], 1);">Cyberdeck</span> | 
             <span class='clickRed' onclick="buyItem(itemList[0], 10);">X10</span> | 
-            <span class='clickRed' onclick="buyItem(itemList[0], 100);"">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[0], 100);">X100</span> | 
             <span class='clickRed' onclick="buyItem(itemList[0], Infinity);">Max</span></p>
-            <p>A Cyberdeck costs <span class='number' id='cyberdeckCost'>10 Bytes</span></p>
-            <p>You have <span class='number' id='cyberdeckNumber'>0</span>/<span class='number' id='cyberdeckNumberMax'>100</span> Cyberdecks</p>
-            <p>Cyberdecks hack at <span class='number' id='cyberdeckRate'>1 Byte</span> per second</p>
-            <p>All Cyberdecks are hacking at <span class='number' id='cyberdeckRateTotal'>0 Bytes</span> per second</p>
+            <p>A Cyberdeck costs <span class='number' id='item0Cost'>10 Bytes</span></p>
+            <p>You have <span class='number' id='item0Number'>0</span>/<span class='number' id='item0NumberMax'>100</span> Cyberdecks</p>
+            <p>Cyberdecks hack at <span class='number' id='item0Rate'>1 Byte</span> per second</p>
+            <p>All Cyberdecks are hacking at <span class='number' id='item0RateTotal'>0 Bytes</span> per second</p>
         </div>
-        <div class="flex-item" id='cyberdeckUpgradeMenu'>
-            <p><span class='clickRed' id='cyberdeckUpgradeName' onclick='Upgrade(itemList[0]);'>Upgrade to an Ergonomic Deck</span></p>
-            <p>This will cost <span class='number' id='cyberdeckUpgradeCost'>1 KB</span></p>
-            <p><span id='cyberdeckUpgradeDesc'>As part of an initiative to lower employee suicide rates, Chui-Bazhusko Multinational developed the Ergonomic Deck. It gently releases both calming and energizing psychotropics into the palms of users.</span></p>
+        <div class="flex-item" id='item0UpgradeMenu'>
+            <p><span class='clickRed' id='item0UpgradeName' onclick='Upgrade(itemList[0]);'>Upgrade to an Ergonomic Deck</span></p>
+            <p>This will cost <span class='number' id='item0UpgradeCost'>1 KB</span></p>
+            <p><span id='item0UpgradeDesc'>As part of an initiative to lower employee suicide rates, Chui-Bazhusko Multinational developed the Ergonomic Deck. It gently releases both calming and energizing psychotropics into the palms of users.</span></p>
         </div>
     </div>
     <!-- ICE Pick -->
-    <hr id='ICEPickHR'>
+    <hr id='item1HR'>
     <div class="flex-container">
-        <div class="flex-item" id='ICEDiv'>
-            <p id='ICEPickMouseOver'>Create an <span class='clickRed' onclick="buyItem(itemList[1], 1);">ICE Pick</span> | 
+        <div class="flex-item" id='item1Menu'>
+            <p id='item1MouseOver'>Create an <span class='clickRed' onclick="buyItem(itemList[1], 1);">ICE Pick</span> | 
             <span class='clickRed' onclick="buyItem(itemList[1], 10);">X10</span> | 
             <span class='clickRed' onclick="buyItem(itemList[1], 100);">X100</span> | 
             <span class='clickRed' onclick="buyItem(itemList[1], Infinity);">Max</span></p>
-            <p>An ICE Pick Costs <span class='number' id='ICEPickCost'>110 Bytes</span></p>
-            <p>You have <span class='number' id='ICEPickNumber'>0</span>/<span class='number' id='ICEPickNumberMax'>100</span> ICE Picks</p>
-            <p>ICE Picks hack at <span class='number' id='ICEPickRate'>10 Bytes</span> per second</p>
-            <p>All you ICE Picks are hacking at <span class='number' id='ICEPickRateTotal'>0 Bytes</span> per second</p>
-            <p>Your ICEPicks are creating <span class="number" id='ICEPickCreationRate'>0</span> Cyberdecks per second</p>
+            <p>An ICE Pick Costs <span class='number' id='item1Cost'>160 Bytes</span></p>
+            <p>You have <span class='number' id='item1Number'>0</span>/<span class='number' id='item1NumberMax'>100</span> ICE Picks</p>
+            <p>ICE Picks hack at <span class='number' id='item1Rate'>10 Bytes</span> per second</p>
+            <p>All you ICE Picks are hacking at <span class='number' id='item1RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ICE Picks are creating <span class="number" id='item1CreationRate'>0</span> Cyberdecks per second</p>
         </div>
-        <div class="flex-item" id='ICEPickUpgradeMenu'>
-            <p><span class='clickRed' id='ICEPickUpgradeName' onclick='Upgrade(itemList[1]);'>Update to an ICEBREAKER</span></p>
-            <p>This will cost <span class='number' id='ICEPickUpgradeCost'>4 KB</span></p>
-            <p><span id='ICEPickUpgradeDesc'>Supposedly developed by legendary netrunner Strange Switch, the ICEBREAKER is the next generation of penetration software.</span></p>
+        <div class="flex-item" id='item1UpgradeMenu'>
+            <p><span class='clickRed' id='item1UpgradeName' onclick='Upgrade(itemList[1]);'>Update to an ICEBREAKER</span></p>
+            <p>This will cost <span class='number' id='item1UpgradeCost'>8 KB</span></p>
+            <p><span id='item1UpgradeDesc'>Supposedly developed by legendary netrunner Strange Switch, the ICEBREAKER is the next generation of penetration software.</span></p>
         </div>
     </div>
     <!-- Botnet -->
-    <hr id='botnetHR'>
+    <hr id='item2HR'>
     <div class="flex-container">
-        <div class="flex-item" id='botnetDiv'>
-            <p id='botnetMouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[2], 1);">Botnet</span> | 
+        <div class="flex-item" id='item2Menu'>
+            <p id='item2MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[2], 1);">Botnet</span> | 
             <span class='clickRed' onclick="buyItem(itemList[2], 10);">X10</span> | 
             <span class='clickRed' onclick="buyItem(itemList[2], 100);">X100</span> | 
             <span class='clickRed' onclick="buyItem(itemList[2], Infinity);">Max</span></p>
-            <p>A Botnet Costs <span class='number' id='botnetCost'>1.2 KB</span></p>
-            <p>You have <span class='number' id='botnetNumber'>0</span>/<span class='number' id='botnetNumberMax'>100</span> Botnets</p>
-            <p>Botnets hack at <span class='number' id='botnetRate'>10 Bytes</span> per second</p>
-            <p>All your Botnets are hacking at <span class='number' id='botnetRateTotal'>0 Bytes</span> per second</p>
-            <p>Your Botnets are creating <span class="number" id='botnetCreationRate'>0</span> ICE Picks per second</p>
+            <p>A Botnet Costs <span class='number' id='item2Cost'>3.2 KB</span></p>
+            <p>You have <span class='number' id='item2Number'>0</span>/<span class='number' id='item2NumberMax'>100</span> Botnets</p>
+            <p>Botnets hack at <span class='number' id='item2Rate'>10 Bytes</span> per second</p>
+            <p>All your Botnets are hacking at <span class='number' id='item2RateTotal'>0 Bytes</span> per second</p>
+            <p>Your Botnets are creating <span class="number" id='item2CreationRate'>0</span> ICE Picks per second</p>
         </div>
-        <div class="flex-item" id='botnetUpgradeMenu'>
-            <p><span class='clickRed' id='botnetUpgradeName' onclick='Upgrade(itemList[2]);'>Implement self-modifying code</span></p>
-            <p>This will cost <span class='number' id='botnetUpgradeCost'>60 KB</span></p>
-            <p><span id='botnetUpgradeDesc'>You never know what your Bots will find when then are infiltrating, they can now adapt to changing circumstances.</span></p>
+        <div class="flex-item" id='item2UpgradeMenu'>
+            <p><span class='clickRed' id='item2UpgradeName' onclick='Upgrade(itemList[2]);'>Implement self-modifying code</span></p>
+            <p>This will cost <span class='number' id='item2UpgradeCost'>64 KB</span></p>
+            <p><span id='item2UpgradeDesc'>You never know what your Bots will find when then are infiltrating, they can now adapt to changing circumstances.</span></p>
         </div>
     </div>
     <!-- Neural Zombie -->
-    <hr id='neuralZombieHR'>
+    <hr id='item3HR'>
     <div class="flex-container">
-        <div class="flex-item" id="neuralZombieDiv">
-            <p id='neuralZombieMouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">Neural Zombie</span> | 
+        <div class="flex-item" id="item3Menu">
+            <p id='item3MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">Neural Zombie</span> | 
             <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
             <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
             <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
-            <p>A Neural Zombies Cost <span class='number' id='neuralZombieCost'>13 KB</span></p>
-            <p>You have <span class='number' id='neuralZombieNumber'>0</span>/<span class='number' id='neuralZombieNumberMax'>100</span> Neural Zombies</p>
-            <p>Neural Zombies hack at <span class='number' id='neuralZombieRate'>10 Bytes</span> per second</p>
-            <p>All your Neural Zombies are hacking at <span class='number' id='neuralZombieRateTotal'>0 Bytes</span> per second</p>
-            <p>Your Zombies are creating <span class="number" id='neuralZombieCreationRate'>0</span> Botnets per second</p>
+            <p>A Neural Zombies Costs <span class='number' id='item3Cost'> 25.6 KB</span></p>
+            <p>You have <span class='number' id='item3Number'>0</span>/<span class='number' id='item3NumberMax'>100</span> Neural Zombies</p>
+            <p>Neural Zombies hack at <span class='number' id='item3Rate'>10 Bytes</span> per second</p>
+            <p>All your Neural Zombies are hacking at <span class='number' id='item3RateTotal'>0 Bytes</span> per second</p>
+            <p>Your Zombies are creating <span class="number" id='item3CreationRate'>0</span> Botnets per second</p>
         </div>
-        <div class="flex-item" id="neuralZombieUpgradeMenu">
-            <p><span class='clickRed' id='neuralZombieUpgradeName' onclick='Upgrade(itemList[3]);'>Anti-tamper Zombies</span></p>
-            <p>This will cost <span class='number' id='neuralZombieUpgradeCost'>500 KB</span></p>
-            <p><span id='neuralZombieUpgradeDesc'>A BioWipe Amalgamated Anti-tamper System&trade; will ensure that any evidence located inside your Zombies will be unrecoverable.</span></p>
+        <div class="flex-item" id="item3UpgradeMenu">
+            <p><span class='clickRed' id='item3UpgradeName' onclick='Upgrade(itemList[3]);'>Anti-tamper Zombies</span></p>
+            <p>This will cost <span class='number' id='item3UpgradeCost'>512 KB</span></p>
+            <p><span id='item3UpgradeDesc'>A BioWipe Amalgamated Anti-tamper System&trade; will ensure that any evidence located inside your Zombies will be unrecoverable.</span></p>
         </div>
     </div>
     <!-- AI -->
-    <hr id='AIHR'>
+    <hr id='item4HR'>
     <div class="flex-container">
-        <div class="flex-item" id="AIDiv">
-            <p id='AIMouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[4], 1);">AI</span> | 
+        <div class="flex-item" id="item4Menu">
+            <p id='item4MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[4], 1);">AI</span> | 
             <span class='clickRed' onclick="buyItem(itemList[4], 10);">X10</span> | 
             <span class='clickRed' onclick="buyItem(itemList[4], 100);">X100</span> | 
             <span class='clickRed' onclick="buyItem(itemList[4], Infinity);">Max</span></p>
-            <p>An AI Costs <span class='number' id='AICost'>130 KB</span></p>
-            <p>You have <span class='number' id='AINumber'>0</span>/<span class='number' id='AINumberMax'>100</span> AIs</p>
-            <p>AIs hack at <span class='number' id='AIRate'>1.4 KB</span> per second</p>
-            <p>All your AIs are hacking at <span class='number' id='AIRateTotal'>0 Bytes</span> per second</p>
-            <p>Your AIs are creating <span class="number" id='AICreationRate'>0</span> Neural Zombies per second</p>
+            <p>An AI Costs <span class='number' id='item4Cost'>130 KB</span></p>
+            <p>You have <span class='number' id='item4Number'>0</span>/<span class='number' id='item4NumberMax'>100</span> AIs</p>
+            <p>AIs hack at <span class='number' id='item4Rate'>102.4 KB</span> per second</p>
+            <p>All your AIs are hacking at <span class='number' id='item4RateTotal'>0 Bytes</span> per second</p>
+            <p>Your AIs are creating <span class="number" id='item4CreationRate'>0</span> Neural Zombies per second</p>
         </div>
-        <div class="flex-item" id='AIUpgradeMenu'>
-            <p><span class='clickRed' id='AIUpgradeName' onclick='Upgrade(itemList[4]);'>Unlock Turing Registry Codes</span></p>
-            <p>This will cost <span class='number' id='AIUpgradeCost'>900 KB</span></p>
-            <p><span id='AIUpgradeDesc'>In the aftermath of the Matto Grosso Space Elevator alightment, it was made illegal for AI to immitate humans. All AI personalities are locked behind a Turing Registry, WINTERMUTE codes are required to unlock them.</span></p>
+        <div class="flex-item" id='item4UpgradeMenu'>
+            <p><span class='clickRed' id='item4UpgradeName' onclick='Upgrade(itemList[4]);'>Unlock Turing Registry Codes</span></p>
+            <p>This will cost <span class='number' id='item4UpgradeCost'>4.1 MB</span></p>
+            <p><span id='item4UpgradeDesc'>In the aftermath of the Matto Grosso Space Elevator alightment, it was made illegal for AI to immitate humans. All AI personalities are locked behind a Turing Registry, WINTERMUTE codes are required to unlock them.</span></p>
         </div>
     </div>
+    <!-- item5 -->
+    <hr id='item5HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item5Menu">
+            <p id='item5MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item5Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item5Number'>0</span>/<span class='number' id='item5NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item5Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item5RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item5CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item5UpgradeMenu">
+            <p><span class='clickRed' id='item5UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item5UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item5UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item6 -->
+    <hr id='item6HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item6Menu">
+            <p id='item6MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item6Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item6Number'>0</span>/<span class='number' id='item6NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item6Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item6RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item6CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item6UpgradeMenu">
+            <p><span class='clickRed' id='item6UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item6UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item6UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item7 -->
+    <hr id='item7HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item7Menu">
+            <p id='item7MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item7Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item7Number'>0</span>/<span class='number' id='item7NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item7Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item7RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item7CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item7UpgradeMenu">
+            <p><span class='clickRed' id='item7UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item7UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item7UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item8 -->
+    <hr id='item8HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item8Menu">
+            <p id='item8MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item8Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item8Number'>0</span>/<span class='number' id='item8NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item8Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item8RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item8CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item8UpgradeMenu">
+            <p><span class='clickRed' id='item8UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item8UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item8UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item9 -->
+    <hr id='item9HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item9Menu">
+            <p id='item9MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item9Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item9Number'>0</span>/<span class='number' id='item9NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item9Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item9RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item9CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item9UpgradeMenu">
+            <p><span class='clickRed' id='item9UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item9UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item9UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item10 -->
+    <hr id='item10HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item10Menu">
+            <p id='item10MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item10Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item10Number'>0</span>/<span class='number' id='item10NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item10Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item10RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item10CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item10UpgradeMenu">
+            <p><span class='clickRed' id='item10UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item10UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item10UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item11 -->
+    <hr id='item11HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item11Menu">
+            <p id='item11MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">ITEMNAMEGOESHERE</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item11Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item11Number'>0</span>/<span class='number' id='item11NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item11Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item11RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item11CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item11UpgradeMenu">
+            <p><span class='clickRed' id='item11UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item11UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item11UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+    <!-- item12 -->
+    <hr id='item12HR'>
+    <div class="flex-container">
+        <div class="flex-item" id="item12Menu">
+            <p id='item12MouseOver'>Create a <span class='clickRed' onclick="buyItem(itemList[3], 1);">item 12</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 10);">X10</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], 100);">X100</span> | 
+            <span class='clickRed' onclick="buyItem(itemList[3], Infinity);">Max</span></p>
+            <p>A ITEMNAMEGOESHERE Costs <span class='number' id='item12Cost'> ITEMCOSTGOESHERE </span></p>
+            <p>You have <span class='number' id='item12Number'>0</span>/<span class='number' id='item12NumberMax'>100</span> ITEMNAMEGOESHERE </p>
+            <p>ITEMNAMEGOESHERE hack at <span class='number' id='item12Rate'>ITEMRATEGOESHERE Bytes</span> per second</p>
+            <p>All your ITEMNAMEGOESHERE are hacking at <span class='number' id='item12RateTotal'>0 Bytes</span> per second</p>
+            <p>Your ITEMNAMEGOESHERE are creating <span class="number" id='item12CreationRate'>0</span> TIERBELOWGOESHERE per second</p>
+        </div>
+        <div class="flex-item" id="item12UpgradeMenu">
+            <p><span class='clickRed' id='item12UpgradeName' onclick='Upgrade(itemList[3]);'>ITEMNAMEGOESHERE</span></p>
+            <p>This will cost <span class='number' id='item12UpgradeCost'>ITEMCOSTGOESHERE KB</span></p>
+            <p><span id='item12UpgradeDesc'>ITEMDESCGOESHERE</span></p>
+        </div>
+    </div>
+
     <div id='footerSave'>
-        <p><u class='clickRed' onclick='importSave();'>Import Save</u> &nbsp; &nbsp; <u class='clickRed' onclick='exportSave();'>Export Save</u> &nbsp; &nbsp; <u class='clickRed' onclick='deleteSave();'>New Game</u></p>
+        <p><u class='clickRed' onclick='deleteSave();'>New Game</u></p>
     </div>
     <script src='main.js' type='text/javascript'>
     </script> 
