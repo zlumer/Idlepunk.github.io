@@ -118,7 +118,7 @@ function load() {
         item10 = itemList[10];
         item11 = itemList[11];
         item12 = itemList[12];
-    }
+    }	
     for (var i = 0; i < itemList.length; i++) {
         //Upgrade text is not refreshed each tick so this sets them properly.
         changeUpgradeText(itemList[i]);
@@ -320,6 +320,14 @@ function autoBuyLoader() {
     autoBuy(itemList[1], itemList[2]);
     autoBuy(itemList[2], itemList[3]);
     autoBuy(itemList[3], itemList[4]);
+    autoBuy(itemList[4], itemList[5]);
+    autoBuy(itemList[5], itemList[6]);
+    autoBuy(itemList[6], itemList[7]);
+    autoBuy(itemList[7], itemList[8]);
+    autoBuy(itemList[8], itemList[9]);
+    autoBuy(itemList[9], itemList[10]);
+    autoBuy(itemList[10], itemList[11]);
+    autoBuy(itemList[11], itemList[12 ]);
 }
 
 function autoBuy(firstItem, secondItem) {
@@ -469,6 +477,7 @@ function changeUpgradeText(input) {
                     HTMLEditor('item4UpgradeDesc', 'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.');
                     break;
             }
+            break;
         case itemList[5]:
             switch (itemList[5].upgradeCount) {
                 case 0:
@@ -492,6 +501,188 @@ function changeUpgradeText(input) {
                     HTMLEditor('item5UpgradeName', 'Place Holder');
                     HTMLEditor('item5UpgradeCost', formatBytes(itemList[5].upgradeCost));
                     HTMLEditor('item5UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[6]:
+            switch (itemList[6].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item6UpgradeName', 'Place Holder');
+                    HTMLEditor('item6UpgradeCost', formatBytes(itemList[6].upgradeCost));
+                    HTMLEditor('item6UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item6UpgradeName', 'Place Holder');
+                    HTMLEditor('item6UpgradeCost', formatBytes(itemList[6].upgradeCost));
+                    HTMLEditor('item6UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item6UpgradeName', 'Place Holder');
+                    HTMLEditor('item6UpgradeCost', formatBytes(itemList[6].upgradeCost));
+                    HTMLEditor('item6UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item6UpgradeName', 'Place Holder');
+                    HTMLEditor('item6UpgradeCost', formatBytes(itemList[6].upgradeCost));
+                    HTMLEditor('item6UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[7]:
+            switch (itemList[7].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item7UpgradeName', 'Place Holder');
+                    HTMLEditor('item7UpgradeCost', formatBytes(itemList[7].upgradeCost));
+                    HTMLEditor('item7UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item7UpgradeName', 'Place Holder');
+                    HTMLEditor('item7UpgradeCost', formatBytes(itemList[7].upgradeCost));
+                    HTMLEditor('item7UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item7UpgradeName', 'Place Holder');
+                    HTMLEditor('item7UpgradeCost', formatBytes(itemList[7].upgradeCost));
+                    HTMLEditor('item7UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item7UpgradeName', 'Place Holder');
+                    HTMLEditor('item7UpgradeCost', formatBytes(itemList[7].upgradeCost));
+                    HTMLEditor('item7UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[8]:
+            switch (itemList[8].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item8UpgradeName', 'Place Holder');
+                    HTMLEditor('item8UpgradeCost', formatBytes(itemList[8].upgradeCost));
+                    HTMLEditor('item8UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item8UpgradeName', 'Place Holder');
+                    HTMLEditor('item8UpgradeCost', formatBytes(itemList[8].upgradeCost));
+                    HTMLEditor('item8UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item8UpgradeName', 'Place Holder');
+                    HTMLEditor('item8UpgradeCost', formatBytes(itemList[8].upgradeCost));
+                    HTMLEditor('item8UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item8UpgradeName', 'Place Holder');
+                    HTMLEditor('item8UpgradeCost', formatBytes(itemList[8].upgradeCost));
+                    HTMLEditor('item8UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[9]:
+            switch (itemList[9].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item9UpgradeName', 'Place Holder');
+                    HTMLEditor('item9UpgradeCost', formatBytes(itemList[9].upgradeCost));
+                    HTMLEditor('item9UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item9UpgradeName', 'Place Holder');
+                    HTMLEditor('item9UpgradeCost', formatBytes(itemList[9].upgradeCost));
+                    HTMLEditor('item9UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item9UpgradeName', 'Place Holder');
+                    HTMLEditor('item9UpgradeCost', formatBytes(itemList[9].upgradeCost));
+                    HTMLEditor('item9UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item9UpgradeName', 'Place Holder');
+                    HTMLEditor('item9UpgradeCost', formatBytes(itemList[9].upgradeCost));
+                    HTMLEditor('item9UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[10]:
+            switch (itemList[10].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item10UpgradeName', 'Place Holder');
+                    HTMLEditor('item10UpgradeCost', formatBytes(itemList[10].upgradeCost));
+                    HTMLEditor('item10UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item10UpgradeName', 'Place Holder');
+                    HTMLEditor('item10UpgradeCost', formatBytes(itemList[10].upgradeCost));
+                    HTMLEditor('item10UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item10UpgradeName', 'Place Holder');
+                    HTMLEditor('item10UpgradeCost', formatBytes(itemList[10].upgradeCost));
+                    HTMLEditor('item10UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item10UpgradeName', 'Place Holder');
+                    HTMLEditor('item10UpgradeCost', formatBytes(itemList[10].upgradeCost));
+                    HTMLEditor('item10UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[11]:
+            switch (itemList[11].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item11UpgradeName', 'Place Holder');
+                    HTMLEditor('item11UpgradeCost', formatBytes(itemList[11].upgradeCost));
+                    HTMLEditor('item11UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item11UpgradeName', 'Place Holder');
+                    HTMLEditor('item11UpgradeCost', formatBytes(itemList[11].upgradeCost));
+                    HTMLEditor('item11UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item11UpgradeName', 'Place Holder');
+                    HTMLEditor('item11UpgradeCost', formatBytes(itemList[11].upgradeCost));
+                    HTMLEditor('item11UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item11UpgradeName', 'Place Holder');
+                    HTMLEditor('item11UpgradeCost', formatBytes(itemList[11].upgradeCost));
+                    HTMLEditor('item11UpgradeDesc', 'Place Holder');
+                    break;
+            }
+            break;
+        case itemList[12]:
+            switch (itemList[12].upgradeCount) {
+                case 0:
+                    break;
+                case 1:
+                    HTMLEditor('item12UpgradeName', 'Place Holder');
+                    HTMLEditor('item12UpgradeCost', formatBytes(itemList[12].upgradeCost));
+                    HTMLEditor('item12UpgradeDesc', 'Place Holder');
+                    break;
+                case 2:
+                    HTMLEditor('item12UpgradeName', 'Place Holder');
+                    HTMLEditor('item12UpgradeCost', formatBytes(itemList[12].upgradeCost));
+                    HTMLEditor('item12UpgradeDesc', 'Place Holder');
+                    break;
+                case 3:
+                    HTMLEditor('item12UpgradeName', 'Place Holder');
+                    HTMLEditor('item12UpgradeCost', formatBytes(itemList[12].upgradeCost));
+                    HTMLEditor('item12UpgradeDesc', 'Place Holder');
+                    break;
+                default:
+                    HTMLEditor('item12UpgradeName', 'Place Holder');
+                    HTMLEditor('item12UpgradeCost', formatBytes(itemList[12].upgradeCost));
+                    HTMLEditor('item12UpgradeDesc', 'Place Holder');
                     break;
             }
             break;
@@ -520,12 +711,12 @@ function buyItem(item, count) {
     //Buys an item
     var cost;
     var max = maxItem(item);
-    var nextCost;
+    //var nextCost;
     for (var i = 0; i < count; i++) { //Tries to by this many items.
         cost = buyCost(item); //Calculates cost of item.
         if (dataHacked >= cost && item.itemCount < max) { //Checks if player can afford cost.
             dataHacked -= cost; //Subtracts cost of item.
-            item.itemCount++; //Increments item.
+            item.itemCount ++; //Increments item.
         } 
         else break;
     }
