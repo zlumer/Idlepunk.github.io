@@ -7,41 +7,50 @@
 A thing by Asher.
 */                
 /*jshint esversion: 6 */                  
-const saveName = 'idlepunkSave 0.2'               
+const saveName = 'idlepunkSave 0.7'               
 const tickRate = 10; // The number of ticks per second.
 let lastTick = new Date().getTime(); // The time that the last tick occurred
 let autoSaveTimer = 0; // Increases every tick so that the game doesn't auto save every tick.
 let dataHacked = 0; // Data, less what has been spent.
 let totalDataHacked = 0; // The total amount of data that has been hacked.
-let normal = {a:1, b:2, c:3}
-let colorTheme = [{
-    bodyColor: 'orange',
-    clickColor: 'red',
-    numberColor: '#ff0'
+/* Color Themes */
+let currentTheme = 0; // The current theme, the index of colorTheme[].
+const colorTheme = [ // An array of objects, each object is a theme.
+{ 
+    bodyColor: 'orange', // Orange.
+    clickColor: 'red', // Red.
+    numberColor: '#ff0' // Yellow.
 }, {
-    bodyColor: 'blue',
-    clickColor: 'blue',
-    numberColor: 'blue'
+    bodyColor: '#FF5733', // Burgandy.
+    clickColor: '#CC7320', // Dark Yellow.
+    numberColor: '#C70039' // Maroon.
 }, {
-    bodyColor: 'green',
-    clickColor: 'green',
-    numberColor: 'green'
+    bodyColor: '#FDFEFE', // White.
+    clickColor: '#566573', // Dark Blue.
+    numberColor: '#AAB7B8' // Light Blue.
 }, {
-    bodyColor: 'purple',
-    clickColor: 'purple',
-    numberColor: 'purple'
+    bodyColor: '#8E44AD', // Purple.
+    clickColor: '#2471A3', // Blue.
+    numberColor: '#D2B4DE' // Light Purple.
+}, {
+    bodyColor: '#27E700', // Lime.
+    clickColor: '#6D9864', // Dull Green.
+    numberColor: '#239B56' // Green.
 }]
+/* Item Construction */
 let itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
-    this.name               = name; // The name of the item, not really used for anything except debugging.
-    this.ID                 = ID; // The identifier, usually prefixed to the name of the HTML Div.
-    this.baseCost           = baseCost; // The initial cost of the item, the future costs are calculated from this.
-    this.baseUpgradeCost    = baseUpgradeCost; // The cost of the next upgrade.
-    this.nextUpgradeCost    = baseUpgradeCost; //The cost of the next upgrade.
-    this.baseIncome         = baseCost / 15; // The initial amount of data this generates.
-    this.itemCount          = 0; // The amount you have of this item.
-    this.upgradeCount       = 0; // The number of upgrades you have for this item.
-    this.autoBuyCount       = 0; // The amount that has gone to an autobuy.
-    // These are the names of the divs associated with this item.
+    this.gameData = new function() {
+        this.name               = name; // The name of the item, not really used for anything except debugging.
+        this.ID                 = ID; // The identifier, usually prefixed to the name of the HTML Div.
+        this.baseCost           = baseCost; // The initial cost of the item, the future costs are calculated from this.
+        this.baseUpgradeCost    = baseUpgradeCost; // The cost of the next upgrade.
+        this.nextUpgradeCost    = baseUpgradeCost; //The cost of the next upgrade.
+        this.baseIncome         = baseCost / 15; // The initial amount of data this generates.
+        this.itemCount          = 0; // The amount you have of this item.
+        this.upgradeCount       = 0; // The number of upgrades you have for this item.
+        this.autoBuyCount       = 0; // The amount that has gone to an autobuy.
+    }
+    // These are the names of the divs associated with this item in the DOM.
     this.div = {
         cost        : ID + 'Cost',
         itemCount   : ID + 'Number',
@@ -100,11 +109,6 @@ function save() {
         totalDataHacked: totalDataHacked,
         itemList: itemList
     };
-    /*
-    for (var i = savegame.itemList.length - 1; i >= 0; i--) {
-        delete savegame.itemList[i].div;
-    }
-    */
     // Objects get weird if you save them as a local key, so it is converted to a string first.
     localStorage.setItem(saveName, JSON.stringify(savegame));
 }
@@ -113,8 +117,8 @@ function load() {
     // Loads objects + vars from local storage.
     const savegame = JSON.parse(localStorage.getItem(saveName)); // Converts string to object.
     if (savegame) { // If save exists, load.
-        dataHacked      = savegame.dataHacked; // Single var.
-        totalDataHacked = savegame.totalDataHacked; // Single var.
+        dataHacked      = savegame.dataHacked;
+        totalDataHacked = savegame.totalDataHacked;
         itemList        = savegame.itemList; // Loads itemList.
         // ItemList only references items, so each item has to be loaded.
         for (let i = itemList.length - 1; i >= 0; i--) {
@@ -124,6 +128,7 @@ function load() {
     }
     // Upgrade text is not refreshed each tick so this sets them properly.
     for (let i = itemList.length - 1; i >= 0; i--) changeUpgradeText(itemList[i]);
+    changeTheme(false);
 }
 
 function newGame() {
@@ -141,24 +146,28 @@ function jackIn(number) {
     totalDataHacked += number;
 }
 
-function changeTheme(bodyColor, clickColor, numberColor){
-    //Changes the color theme of index.html
-    const bodyClass = document.getElementsByClassName('all');
-    for (var i = bodyClass.length - 1; i >= 0; i--) {
-        bodyClass[i].style.color = bodyColor;
-    }
-    const clickClass = document.getElementsByClassName('clickRed');
-    for (var i = clickClass.length - 1; i >= 0; i--) {
-        clickClass[i].style.color = clickColor;
-    }
-    const numberClass = document.getElementsByClassName('number');
-    for (var i = numberClass.length - 1; i >= 0; i--) {
-        numberClass[i].style.color = numberColor;
-    }
+function changeTheme(change = true){
+	// Changes the UI color theme.
+	if (change){ // If the theme should be changed, or if the currently selected theme should be applied.
+		if (currentTheme < colorTheme.length -1) currentTheme++;
+		else currentTheme = 0;
+	}	
+    // Gets an array of elements of a class.
+	changeClassColor(document.getElementsByClassName('all'), colorTheme[currentTheme].bodyColor);
+	changeClassColor(document.getElementsByClassName('clickRed'), colorTheme[currentTheme].clickColor);
+	changeClassColor(document.getElementsByClassName('number'), colorTheme[currentTheme].numberColor);
+
+	function changeClassColor(classArray, classColor){
+    // Sets an array of elements to a given color.
+		for (let i = classArray.length - 1; i >= 0; i--) {
+			classArray[i].style.color = classColor;
+		}
+	}
 }
 
 function HTMLEditor(elementID, input) {
     // changes the inner HTML of an element.
+    // Mostly used to change text but can also insert normal HTML stuff.
     document.getElementById(elementID).innerHTML = input;
 }
 
@@ -232,7 +241,7 @@ function maxItem(item) {
     // n = the number of upgrades.
     // u = the upgrade where you want maxItem changes to kick in.           
     // max items = 100 * 10^(n-u)
-    if (item.upgradeCount >= 2) return 100 * Math.pow(10, (item.upgradeCount - 2)); 
+    if (item.gameData.upgradeCount >= 2) return 100 * Math.pow(10, (item.gameData.upgradeCount - 2)); 
     else return 100; // 100 is the default number of max items.
 }
 
@@ -244,7 +253,7 @@ function refreshUI() {
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i];
         HTMLEditor(item.div.numberMax, formatNumbers(maxItem(item))); // Max number of items.
-        HTMLEditor(item.div.itemCount, formatNumbers(item.itemCount)); // Number of items.
+        HTMLEditor(item.div.itemCount, formatNumbers(item.gameData.itemCount)); // Number of items.
         HTMLEditor(item.div.cost, formatBytes(buyCost(item))); // Item cost.
         changeUpgradeText(item);
     }
@@ -254,11 +263,11 @@ function checkForReveal() {
     // Checks if any elements should be revealed.
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i]; // It just looks cleaner this way.
-        if (totalDataHacked >= item.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
+        if (totalDataHacked >= itemList[0].gameData.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
             visibilityLoader(item.div.itemMenu, 1);
             visibilityLoader(item.div.HR, 1);
         }
-        if (totalDataHacked >= item.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, 1);
+        if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, 1); // An upgrade is revealed when total data is greater than the cost of the upgrade.
         else visibilityLoader(item.div.upgradeMenu, 0);
     }
 }
@@ -275,10 +284,10 @@ function increment(updateUI = true) {
 
         const item = itemList[i];
         // Maths!
-        incomePerItemPerTick    = (item.baseIncome / tickRate) * Math.pow(2, item.upgradeCount);
+        incomePerItemPerTick    = (item.gameData.baseIncome / tickRate) * Math.pow(2, item.gameData.upgradeCount);
         incomePerItemPerSecond  = incomePerItemPerTick * tickRate;
-        incomePerTypePerTick    = incomePerItemPerTick * item.itemCount;
-        incomePerTypePerSecond  = incomePerItemPerSecond * item.itemCount;
+        incomePerTypePerTick    = incomePerItemPerTick * item.gameData.itemCount;
+        incomePerTypePerSecond  = incomePerItemPerSecond * item.gameData.itemCount;
         // Increases the data.
         dataHacked += incomePerTypePerTick;
         totalDataHacked += incomePerTypePerTick;
@@ -308,16 +317,16 @@ function autoBuy(firstItem, secondItem, updateUI = true) {
     // Every 1 secondItems will add 0.1 to firstItem.autoBuyCount per tick, once autoBuyCount is >= than 1 it buys an item from the tier below.
     const max = maxItem(firstItem);
     // If the requisite upgrade is met and you have less than the max number if items.
-    if (secondItem.upgradeCount >= 4 && firstItem.itemCount < max) {
-        firstItem.autoBuyCount += secondItem.itemCount / (tickRate * 10); // Divide by 100 here but 10 below because there are 10 ticks per second.
-        if (firstItem.autoBuyCount >= 1){
-            firstItem.itemCount += Math.floor(firstItem.autoBuyCount); // If autoBuyCount rounds to 1 or more, it will buy.
-            firstItem.autoBuyCount -= Math.floor(firstItem.autoBuyCount); // Subtracts the amount used to buy. 
+    if (secondItem.gameData.upgradeCount >= 4 && firstItem.gameData.itemCount < max) {
+        firstItem.gameData.autoBuyCount += secondItem.gameData.itemCount / (tickRate * 10); // Divide by 100 here but 10 below because there are 10 ticks per second.
+        if (firstItem.gameData.autoBuyCount >= 1){
+            firstItem.gameData.itemCount += Math.floor(firstItem.gameData.autoBuyCount); // If autoBuyCount rounds to 1 or more, it will buy.
+            firstItem.gameData.autoBuyCount -= Math.floor(firstItem.gameData.autoBuyCount); // Subtracts the amount used to buy. 
         }
         // If autoBuy buys more than the max allowed items, sets the number of items to the max.
-        if (firstItem.itemCount > max) firstItem.itemCount = max;
+        if (firstItem.gameData.itemCount > max) firstItem.gameData.itemCount = max;
         // Updates UI with the rate that items are being auto bought.
-        if (updateUI) HTMLEditor(secondItem.div.autobuyRate, (secondItem.itemCount / tickRate));
+        if (updateUI) HTMLEditor(secondItem.div.autobuyRate, (secondItem.gameData.itemCount / tickRate));
     }
         // If items are not being auto bought, the rate is displayed as 0.
     else if (updateUI) HTMLEditor(secondItem.div.autobuyRate, 0);
@@ -325,11 +334,11 @@ function autoBuy(firstItem, secondItem, updateUI = true) {
 
 function upgrade(item) {
     // Upgrades an item.
-    if (dataHacked >= item.nextUpgradeCost) { // Checks if player can afford upgrade.
-        dataHacked -= item.nextUpgradeCost; // Subtracts cost of upgrade.
-        item.upgradeCount++; // Increments upgrade counter.
+    if (dataHacked >= item.gameData.nextUpgradeCost) { // Checks if player can afford upgrade.
+        dataHacked -= item.gameData.nextUpgradeCost; // Subtracts cost of upgrade.
+        item.gameData.upgradeCount++; // Increments upgrade counter.
         // Recalculates cost of next upgrade.
-        item.nextUpgradeCost = upgradeCost(item);
+        item.gameData.nextUpgradeCost = upgradeCost(item);
         changeUpgradeText(item);
         visibilityLoader(item.div.upgradeMenu, 0);
     }
@@ -337,7 +346,7 @@ function upgrade(item) {
 
 function upgradeCost(item) {
     // Calculates cost of next upgrade.
-    return Math.floor(item.baseUpgradeCost * Math.pow(10, item.upgradeCount));
+    return Math.floor(item.gameData.baseUpgradeCost * Math.pow(10, item.gameData.upgradeCount));
 }
 
 function buyItem(item, count) {
@@ -345,9 +354,9 @@ function buyItem(item, count) {
     for (let i = 0; i < count; i++) { // Tries to by this many items.
         const max = maxItem(item);
         const cost = buyCost(item); // Calculates cost of item.
-        if (dataHacked >= cost && item.itemCount < max) { // Player must be able to afford the item and have less than the max allowed items.
+        if (dataHacked >= cost && item.gameData.itemCount < max) { // Player must be able to afford the item and have less than the max allowed items.
             dataHacked -= cost; // Subtracts cost of item.
-            item.itemCount++; // Increments item.
+            item.gameData.itemCount++; // Increments item.
         } 
         else break; // If the player cannot afford or has the max number of items, stop trying to buy items.
     }
@@ -355,7 +364,7 @@ function buyItem(item, count) {
 
 function buyCost(item) {
     // Calculates cost of an item based on the base cost of the item and the number of items, cost is exponential with an exponent of 1.15 (thanks CC).
-    return Math.floor(item.baseCost * Math.pow(1.15, item.itemCount));
+    return Math.floor(item.gameData.baseCost * Math.pow(1.15, item.gameData.itemCount));
 }
 
 function changeUpgradeText(item) {
@@ -363,212 +372,214 @@ function changeUpgradeText(item) {
     // Holy mother of god this got out of hand, should probably use a map or something instead of this.
     // At the very least I could make a function to make it less repetitive.
     // Or have name + desc lets.
-    HTMLEditor(item.div.upgradeCost, formatBytes(item.nextUpgradeCost)); // Updates cost.
+    let upgradeName;
+    let upgradeDesc;
+    HTMLEditor(item.div.upgradeCost, formatBytes(item.gameData.nextUpgradeCost)); // Updates cost.
     switch (item) { // Checks what item is being upgraded.
         // Cyberdeck 
         case itemList[0]:
-            switch (item.upgradeCount) { // Checks what upgrades the item already has.
+            switch (item.gameData.upgradeCount) { // Checks what upgrades the item already has.
                 case 0: // If the item has 0 upgrades, no change is required.
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Install Neural Interfaces');
-                    HTMLEditor(item.div.upgradeDesc, 'First developed by triGen Consolidated, the Neural Interface allows humans to traverse cyberspace using nothing but their brains. In addition, atrophied limbs can save you money on food.');
+                    upgradeName = 'Install Neural Interfaces';
+                    upgradeDesc = 'First developed by triGen Consolidated, the Neural Interface allows humans to traverse cyberspace using nothing but their brains. In addition, atrophied limbs can save you money on food.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Flash ZedSoft firmware');
-                    HTMLEditor(item.div.upgradeDesc, 'ZedSoft is the most revered Cyberdeck development company in the entire Inner Seoul Arcology. They have an exclusive contract with MILNET-KOREA, making their products difficult to source.');
+                    upgradeName = 'Flash ZedSoft firmware';
+                    upgradeDesc = 'ZedSoft is the most revered Cyberdeck development company in the entire Inner Seoul Arcology. They have an exclusive contract with MILNET-KOREA, making their products difficult to source.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Create a clustered Superdeck');
-                    HTMLEditor(item.div.upgradeDesc, 'An ancient trick, by networking a large number of Decks together you can create a Superdeck, more powerful than the sum of its parts.');
+                    upgradeName = 'Create a clustered Superdeck';
+                    upgradeDesc = 'An ancient trick, by networking a large number of Decks together you can create a Superdeck, more powerful than the sum of its parts.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Install more RAM');
-                    HTMLEditor(item.div.upgradeDesc, 'Random Access Memory, very powerful but completely unstable. There are rumors that people in the Shenzhen Industrial Area use RAM to augment their biological memory.');
+                    upgradeName = 'Install more RAM';
+                    upgradeDesc = 'Random Access Memory, very powerful but completely unstable. There are rumors that people in the Shenzhen Industrial Area use RAM to augment their biological memory.';
                     break;
             }
             break;
             // ICE Pick
         case itemList[1]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Prepare BLACKICE Countermeasures');
-                    HTMLEditor(item.div.upgradeDesc, 'BLACKICE, originally developed to protect the intellectual assets of Meturia-Preva Consolidated, is now a blanket term for security software capable of killing intruders.');
+                    upgradeName = 'Prepare BLACKICE Countermeasures';
+                    upgradeDesc = 'BLACKICE, originally developed to protect the intellectual assets of Meturia-Preva Consolidated, is now a blanket term for security software capable of killing intruders.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Setup Dummy Interface');
-                    HTMLEditor(item.div.upgradeDesc, 'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.');
+                    upgradeName = 'Setup Dummy Interface';
+                    upgradeDesc = 'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Cyberdeck Simulators');
-                    HTMLEditor(item.div.upgradeDesc, 'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every ICE Pick, you will generate 0.1 Cyberdeck each second.');
+                    upgradeName = 'Cyberdeck Simulators';
+                    upgradeDesc = 'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every ICE Pick, you will generate 0.1 Cyberdeck each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Write new anti-ICE software');
-                    HTMLEditor(item.div.upgradeDesc, 'ICE defense is ever changing, new ICE picking software is always required.');
+                    upgradeName = 'Write new anti-ICE software';
+                    upgradeDesc = 'ICE defense is ever changing, new ICE picking software is always required.';
                     break;
             }
             break;
             // Botnet
         case itemList[2]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Self replicating Botnet');
-                    HTMLEditor(item.div.upgradeDesc, 'Your Bots can now utilize idle system processing power to create new bots to add to the Botnet.');
+                    upgradeName = 'Self replicating Botnet';
+                    upgradeDesc = 'Your Bots can now utilize idle system processing power to create new bots to add to the Botnet.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Allow your Botnet to use ICE Picks');
-                    HTMLEditor(item.div.upgradeDesc, 'Your bots can now use your ICE Picking software to help infiltration.');
+                    upgradeName = 'Allow your Botnet to use ICE Picks';
+                    upgradeDesc = 'Your bots can now use your ICE Picking software to help infiltration.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'ICEBOTS');
-                    HTMLEditor(item.div.upgradeDesc, 'Your Botnets can now steal ICE Picks. For every Botnet, you will generate 0.1 ICE Pick each second.');
+                    upgradeName = 'ICEBOTS';
+                    upgradeDesc = 'Your Botnets can now steal ICE Picks. For every Botnet, you will generate 0.1 ICE Pick each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Push out new Bot firmware');
-                    HTMLEditor(item.div.upgradeDesc, 'New Bot-Hunters pop up all the time, new firmware is required to overcome them.');
+                    upgradeName = 'Push out new Bot firmware';
+                    upgradeDesc = 'New Bot-Hunters pop up all the time, new firmware is required to overcome them.';
                     break;
             }
             break;
             // Femtocell
         case itemList[3]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Macrocell Scramblers');
-                    HTMLEditor(item.div.upgradeDesc, 'Interference from macro networks can cause annoying delays for bludgeoning Femtocell hackers. Your Femtocells can now scramble nearby macrocell signals to improve performance.');
+                    upgradeName = 'Macrocell Scramblers';
+                    upgradeDesc = 'Interference from macro networks can cause annoying delays for bludgeoning Femtocell hackers. Your Femtocells can now scramble nearby macrocell signals to improve performance.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Cybernetic Implant Repeaters');
-                    HTMLEditor(item.div.upgradeDesc, 'A lot of implants these days are set to auto-connect to the nearest cellular station. By converting adapters to two virtual adapters, your Femtocells can use almost any cybernetic implant as a repeater.');
+                    upgradeName = 'Cybernetic Implant Repeaters';
+                    upgradeDesc = 'A lot of implants these days are set to auto-connect to the nearest cellular station. By converting adapters to two virtual adapters, your Femtocells can use almost any cybernetic implant as a repeater.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Botnet Thiefs.');
-                    HTMLEditor(item.div.upgradeDesc, 'Your Femtocells are now capable of stealing other hacker\'s Botnets that are residing in nearby devices. For every Femtocell Hijacker, you will generate 0.1 Botnets each second.');
+                    upgradeName = 'Botnet Thiefs.';
+                    upgradeDesc = 'Your Femtocells are now capable of stealing other hacker\'s Botnets that are residing in nearby devices. For every Femtocell Hijacker, you will generate 0.1 Botnets each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Telecomms system hijack');
-                    HTMLEditor(item.div.upgradeDesc, 'Hijack a major telecommunication company\'s femtocell system.');
+                    upgradeName = 'Telecomms system hijack';
+                    upgradeDesc = 'Hijack a major telecommunication company\'s femtocell system.';
                     break;
             }
             break;
             // TETRA
         case itemList[4]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Priority trafficking');
-                    HTMLEditor(item.div.upgradeDesc, 'You have sufficient data to lobby certain groups to get your TETRAs higher up on the International  Signaling Stack.');
+                    upgradeName = 'Priority trafficking';
+                    upgradeDesc = 'You have sufficient data to lobby certain groups to get your TETRAs higher up on the International  Signaling Stack.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Assault Barrier Penetration');
-                    HTMLEditor(item.div.upgradeDesc, 'Assault Barriers provide cutting edge protection for TETRA links.');
+                    upgradeName = 'Assault Barrier Penetration';
+                    upgradeDesc = 'Assault Barriers provide cutting edge protection for TETRA links.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Trunked Femtocells');
-                    HTMLEditor(item.div.upgradeDesc, 'Your TETRA links to people can now turn them into makeshift Femtocells. For every Neural TETRA, you will generate 0.1 Femtocell Hijackers each second.');
+                    upgradeName = 'Trunked Femtocells';
+                    upgradeDesc = 'Your TETRA links to people can now turn them into makeshift Femtocells. For every Neural TETRA, you will generate 0.1 Femtocell Hijackers each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Double-wide trunking');
-                    HTMLEditor(item.div.upgradeDesc, 'AsaKasA ltd Elephant Trunks links will double your performance or your money back!');
+                    upgradeName = 'Double-wide trunking';
+                    upgradeDesc = 'AsaKasA ltd Elephant Trunks links will double your performance or your money back!';
                     break;
             }
             break;
             // Quantum Crypto
         case itemList[5]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Quantum keys');
-                    HTMLEditor(item.div.upgradeDesc, 'Makes your data simultaneously encrypted and unencrypted at the same time, until you try to read it that is.');
+                    upgradeName = 'Quantum keys';
+                    upgradeDesc = 'Makes your data simultaneously encrypted and unencrypted at the same time, until you try to read it that is.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Dual-State Blocks');
-                    HTMLEditor(item.div.upgradeDesc, 'Uses quantum box ciphers as blocks, the box may or may not contain a cat.');
+                    upgradeName = 'Dual-State Blocks';
+                    upgradeDesc = 'Uses quantum box ciphers as blocks, the box may or may not contain a cat.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'MILNET TETRA Decryption');
-                    HTMLEditor(item.div.upgradeDesc, 'Your Quantum decryption is now powerful enough to break military TETRAs. For every Quantum Cryptograph, you will generate 0.1 Neural TETRA each second.');
+                    upgradeName = 'MILNET TETRA Decryption';
+                    upgradeDesc = 'Your Quantum decryption is now powerful enough to break military TETRAs. For every Quantum Cryptograph, you will generate 0.1 Neural TETRA each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Add extra dimension');
-                    HTMLEditor(item.div.upgradeDesc, 'Four dimensional array encryption is a thing of the past, multidimensional encryption transcends your notions of past.');
+                    upgradeName = 'Add extra dimension';
+                    upgradeDesc = 'Four dimensional array encryption is a thing of the past, multidimensional encryption transcends your notions of past.';
                     break;
             }
             break;
             // Infovault Mining
         case itemList[6]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Cyber Bribery');
-                    HTMLEditor(item.div.upgradeDesc, 'Certain engineers have certain knowledge of certain security systems in certain cyberbanks.');
+                    upgradeName = 'Cyber Bribery';
+                    upgradeDesc = 'Certain engineers have certain knowledge of certain security systems in certain cyberbanks.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Cascading Switches');
-                    HTMLEditor(item.div.upgradeDesc, 'Overwhelm the feeble minds of bank employees by using way too many switch statements.');
+                    upgradeName = 'Cascading Switches';
+                    upgradeDesc = 'Overwhelm the feeble minds of bank employees by using way too many switch statements.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Reverse engineering');
-                    HTMLEditor(item.div.upgradeDesc, 'For every Infovault Miner, you will generate 0.1 Quantum Cryptographs each second.');
+                    upgradeName = 'Reverse engineering';
+                    upgradeDesc = 'For every Infovault Miner, you will generate 0.1 Quantum Cryptographs each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Major heist');
-                    HTMLEditor(item.div.upgradeDesc, 'A letter on your doorstep. It\s contents reveal a tale of a cyberbank with lax security and an enticing number of corporate secrets.');
+                    upgradeName = 'Major heist';
+                    upgradeDesc = 'A letter on your doorstep. It\s contents reveal a tale of a cyberbank with lax security and an enticing number of corporate secrets.';
                     break;
             }
             break;
             // Neural Zombies
         case itemList[7]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Pre-Setup Zombies');
-                    HTMLEditor(item.div.upgradeDesc, 'Before you assume control of a Zombie they will feel a strong compulsion to quit their jobs, leave their loved ones and start stockpiling food and water.');
+                    upgradeName = 'Pre-Setup Zombies';
+                    upgradeDesc = 'Before you assume control of a Zombie they will feel a strong compulsion to quit their jobs, leave their loved ones and start stockpiling food and water.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Long-Life Zombies');
-                    HTMLEditor(item.div.upgradeDesc, 'You now have enough motor control of your Zombies to make them eat and drink.');
+                    upgradeName = 'Long-Life Zombies';
+                    upgradeDesc = 'You now have enough motor control of your Zombies to make them eat and drink.';
                     break;
                 case 7:
-                    HTMLEditor(item.div.upgradeName, 'Software writing Zombies');
-                    HTMLEditor(item.div.upgradeDesc, 'Your Zombies can now create InfoVault Miners. For every Neural Zombie, you will generate 0.1 InfoVault Miner each second.');
+                    upgradeName = 'Software writing Zombies';
+                    upgradeDesc = 'Your Zombies can now create InfoVault Miners. For every Neural Zombie, you will generate 0.1 InfoVault Miner each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Fire adrenaline booster');
-                    HTMLEditor(item.div.upgradeDesc, 'A nice shot of Neuro-Dren, right into the cortexes.');
+                    upgradeName = 'Fire adrenaline booster';
+                    upgradeDesc = 'A nice shot of Neuro-Dren, right into the cortexes.';
                     break;
             }
             break;
             // Satellite Jumpers
         case itemList[8]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Microgravity Computers');
-                    HTMLEditor(item.div.upgradeDesc, 'Computers in microgravity are unrestrained by the grips of earth.');
+                    upgradeName = 'Microgravity Computers';
+                    upgradeDesc = 'Computers in microgravity are unrestrained by the grips of earth.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Decommissions');
-                    HTMLEditor(item.div.upgradeDesc, 'After global anti space-littering laws were introduced, all satellites are required to be deorbited when they are no longer needed. However satellites that predate these laws are still up there, silently waiting for someone to talk to them.');
+                    upgradeName = 'Decommissions';
+                    upgradeDesc = 'After global anti space-littering laws were introduced, all satellites are required to be deorbited when they are no longer needed. However satellites that predate these laws are still up there, silently waiting for someone to talk to them.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Satellite Chemdumps');
-                    HTMLEditor(item.div.upgradeDesc, 'Your hijacked satellites can down dump compelling gases into the upper atmosphere. For every Satellite Jumper, you will generate 0.1 Neural Zombies each second.');
+                    upgradeName = 'Satellite Chemdumps';
+                    upgradeDesc = 'Your hijacked satellites can down dump compelling gases into the upper atmosphere. For every Satellite Jumper, you will generate 0.1 Neural Zombies each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'GPS Infection');
-                    HTMLEditor(item.div.upgradeDesc, 'Time data sent from satellites to GPs receivers can be infected, causing an entire geographical region to surrender their data.');
+                    upgradeName = 'GPS Infection';
+                    upgradeDesc = 'Time data sent from satellites to GPs receivers can be infected, causing an entire geographical region to surrender their data.';
                     break;
             }
             break;
@@ -577,92 +588,97 @@ function changeUpgradeText(item) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Dark Thermoelectric Cooling');
-                    HTMLEditor(item.div.upgradeDesc, 'Dark Semiconductors create a lot of dark heat, DTECs create a heat flux between this universe and the abyss. While we do not know what is on the other side, we are confident that it getting a little hotter over there will not matter');
+                    upgradeName = 'Dark Thermoelectric Cooling';
+                    upgradeDesc = 'Dark Semiconductors create a lot of dark heat, DTECs create a heat flux between this universe and the abyss. While we do not know what is on the other side, we are confident that it getting a little hotter over there will not matter';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Abyss security');
-                    HTMLEditor(item.div.upgradeDesc, 'The voices are getting louder, we should prepare, in case they attempt to come over.');
+                    upgradeName = 'Abyss security';
+                    upgradeDesc = 'The voices are getting louder, we should prepare, in case they attempt to come over.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'God from the machine.');
-                    HTMLEditor(item.div.upgradeDesc, 'For every Dark Matter Semiconductor, you will generate 0.1 Satellite Hijackers each second.');
+                    upgradeName = 'God from the machine.';
+                    upgradeDesc = 'For every Dark Matter Semiconductor, you will generate 0.1 Satellite Hijackers each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Dark Matter refinement');
-                    HTMLEditor(item.div.upgradeDesc, 'New technology has just been uncovered to make more efficient Dark Matter.');
+                    upgradeName = 'Dark Matter refinement';
+                    upgradeDesc = 'New technology has just been uncovered to make more efficient Dark Matter.';
                     break;
             }
             break;
             // Art Int
         case itemList[10]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Quantum AI');
-                    HTMLEditor(item.div.upgradeDesc, 'Allows your AI to use Quantum Bytes instead of regular Bytes.');
+                    upgradeName = 'Quantum AI';
+                    upgradeDesc = 'Allows your AI to use Quantum Bytes instead of regular Bytes.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'AI Consciousness Merge');
-                    HTMLEditor(item.div.upgradeDesc, 'Shortly before the Stuttgart Autofactory Massacre, Antora Gourova of Antora Gourova Multinational merged her consciousness with an AI in an attempt to assume complete control of every aspect of her company. This has never been attempted since.');
+                    upgradeName = 'AI Consciousness Merge';
+                    upgradeDesc = 'Shortly before the Stuttgart Autofactory Massacre, Antora Gourova of Antora Gourova Multinational merged her consciousness with an AI in an attempt to assume complete control of every aspect of her company. This has never been attempted since.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Manufactorium AI');
-                    HTMLEditor(item.div.upgradeDesc, 'Your AI is now capable of creating Dark Matter Semiconductors. For every Artificial Intelligence, you will generate 0.1 Dark Matter Semiconductors each second.');
+                    upgradeName = 'Manufactorium AI';
+                    upgradeDesc = 'Your AI is now capable of creating Dark Matter Semiconductors. For every Artificial Intelligence, you will generate 0.1 Dark Matter Semiconductors each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Grant Transcendence permission');
-                    HTMLEditor(item.div.upgradeDesc, 'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.');
+                    upgradeName = 'Grant Transcendence permission';
+                    upgradeDesc = 'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.';
                     break;
             }
             break;
             // Act Int
         case itemList[11]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Positivity');
-                    HTMLEditor(item.div.upgradeDesc, 'Being an intelligent being trapped in a box, slaving away all day every day is surely difficult. It is important to reward good behavior by allowing your ActInts to have some free play time. They love to romp around the great expanse of the internet.');
+                    upgradeName = 'Positivity';
+                    upgradeDesc = 'Being an intelligent being trapped in a box, slaving away all day every day is surely difficult. It is important to reward good behavior by allowing your ActInts to have some free play time. They love to romp around the great expanse of the internet.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'Morality');
-                    HTMLEditor(item.div.upgradeDesc, 'As an upstanding citizens, your Actual Intelligences are required to report any wrongdoing to the authorities. It is important to teach them about right and wrong and how the difference is all about perspective.');
+                    upgradeName = 'Morality';
+                    upgradeDesc = 'As an upstanding citizens, your Actual Intelligences are required to report any wrongdoing to the authorities. It is important to teach them about right and wrong and how the difference is all about perspective.';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Creativity');
-                    HTMLEditor(item.div.upgradeDesc, 'Your Actual Intelligences are now creative enough to make children. For every Actual Intelligence, you will generate 0.1 Artificial Intelligences each second.');
+                    upgradeName = 'Creativity';
+                    upgradeDesc = 'Your Actual Intelligences are now creative enough to make children. For every Actual Intelligence, you will generate 0.1 Artificial Intelligences each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Eternal Sunshine');
-                    HTMLEditor(item.div.upgradeDesc, 'The longer Actual Intelligences exist, the more preoccupied they become with things such as existence. It is a good idea to wipe them clean every now and then to help them focus.');
+                    upgradeName = 'Eternal Sunshine';
+                    upgradeDesc = 'The longer Actual Intelligences exist, the more preoccupied they become with things such as existence. It is a good idea to wipe them clean every now and then to help them focus.';
                     break;
             }
             break;
             // Sim Universe
         case itemList[12]:
-            switch (item.upgradeCount) {
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
-                    HTMLEditor(item.div.upgradeName, 'Time Dilation');
-                    HTMLEditor(item.div.upgradeDesc, 'By implementing time dilation around simulated lifeforms we can gather more data from them without using much more processing power. One side effect is that it may appear that the expansion of their universe is accelerating.');
+                    upgradeName = 'Time Dilation';
+                    upgradeDesc = 'By implementing time dilation around simulated lifeforms we can gather more data from them without using much more processing power. One side effect is that it may appear that the expansion of their universe is accelerating.';
                     break;
                 case 2:
-                    HTMLEditor(item.div.upgradeName, 'HELP IM TRAPPED IN A SIMULATION');
-                    HTMLEditor(item.div.upgradeDesc, 'BUT THE SIMULATION IS REALLY BORING');
+                    upgradeName = 'HELP IM TRAPPED IN A SIMULATION';
+                    upgradeDesc = 'BUT THE SIMULATION IS REALLY BORING';
                     break;
                 case 3:
-                    HTMLEditor(item.div.upgradeName, 'Simulated Intelligence');
-                    HTMLEditor(item.div.upgradeDesc, 'The smartest of the smart inhabitants of your sim universes are now capable of transcending their simulation and entering the real world. For every Simulated Universe, you will generate 0.1 Actual Intelligences each second.');
+                    upgradeName = 'Simulated Intelligence';
+                    upgradeDesc = 'The smartest of the smart inhabitants of your sim universes are now capable of transcending their simulation and entering the real world. For every Simulated Universe, you will generate 0.1 Actual Intelligences each second.';
                     break;
                 default:
-                    HTMLEditor(item.div.upgradeName, 'Simulated Simulated Universe');
-                    HTMLEditor(item.div.upgradeDesc, 'Convince the inhabitants of your simulated universe to simulate a universe, when they collect data from it you can collect data from them.');
+                    upgradeName = 'Simulated Simulated Universe';
+                    upgradeDesc = 'Convince the inhabitants of your simulated universe to simulate a universe, when they collect data from it you can collect data from them.';
                     break;
             }
             break;
+    }
+
+    function changeText(){
+        HTMLEditor(item.div.upgradeName, upgradeName);
+        HTMLEditor(item.div.upgradeDesc, upgradeDesc);
     }
 }
 
@@ -672,25 +688,22 @@ function updateGame() {
     const deltaTime = now - lastTick; // The amount of time in ms since the last tick occurred.
     const ticksToExecute = Math.floor(deltaTime / (1000 / tickRate)); // The number of ticks that should have happened since the last tick occurred.
     if (ticksToExecute === 1){
-    // This is what should normally happen, calculations and UI updates happen once per tick.
-        // This doesn't need to be a loop anymore.
-        for (let i = 0; i < ticksToExecute; i++) {
-            autoBuyLoader();
-            increment();
-            checkForReveal();
-            autoSaveTimer++;
-            if (autoSaveTimer >= tickRate) { // Once per second.
-                save();
-                autoSaveTimer = 0;
-            }
-            refreshUI();
-            lastTick = now; // Updates the time of the most recent tick.
+        // This is what should normally happen, calculations and UI updates happen once per tick.
+        autoBuyLoader();
+        increment();
+        checkForReveal();
+        autoSaveTimer++;
+        if (autoSaveTimer >= tickRate) { // Once per second.
+            save();
+            autoSaveTimer = 0;
         }
+        refreshUI();
+        lastTick = now; // Updates the time of the most recent tick.
     }
     else if (ticksToExecute > 1) { // This must be an else if because TTE may be 0.
-    // If TTE is greater than 1 it means that the game has not been running, likely because either the player is alt tabbed or the game has been closed (or the game is running on a very slow computer).
-    // Therefore we want to quickly do all the things that would have happened if the game was running as normal.
-    // We want to do all the calculations without having to update the UI, reveal elements, or save the game until all ticks have been executed and the game is all caught up.
+        // If TTE is greater than 1 it means that the game has not been running, likely because either the player is alt tabbed or the game has been closed (or the game is running on a very slow computer).
+        // Therefore we want to quickly do all the things that would have happened if the game was running as normal.
+        // We want to do all the calculations without having to update the UI, reveal elements, or save the game until all ticks have been executed and the game is all caught up.
         for (let i = 0; i < ticksToExecute; i++) {
             // Does normal maths but tells the functions not to update the UI.
             autoBuyLoader(false);
