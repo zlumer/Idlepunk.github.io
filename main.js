@@ -7,7 +7,7 @@
 A thing by Asher.
 */                
 /*jshint esversion: 6 */                  
-const saveName = 'idlepunkSave 0.7'               
+const saveName = 'idlepunkSave 0.7'; // The name used in local storage, change if an update will break using old saves.        
 const tickRate = 10; // The number of ticks per second.
 let lastTick = new Date().getTime(); // The time that the last tick occurred
 let autoSaveTimer = 0; // Increases every tick so that the game doesn't auto save every tick.
@@ -36,20 +36,20 @@ const colorTheme = [ // An array of objects, each object is a theme.
     bodyColor: '#27E700', // Lime.
     clickColor: '#6D9864', // Dull Green.
     numberColor: '#239B56' // Green.
-}]
+}];
 /* Item Construction */
 let itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
-    this.gameData = new function() {
-        this.name               = name; // The name of the item, not really used for anything except debugging.
-        this.ID                 = ID; // The identifier, usually prefixed to the name of the HTML Div.
-        this.baseCost           = baseCost; // The initial cost of the item, the future costs are calculated from this.
-        this.baseUpgradeCost    = baseUpgradeCost; // The cost of the next upgrade.
-        this.nextUpgradeCost    = baseUpgradeCost; //The cost of the next upgrade.
-        this.baseIncome         = baseCost / 15; // The initial amount of data this generates.
-        this.itemCount          = 0; // The amount you have of this item.
-        this.upgradeCount       = 0; // The number of upgrades you have for this item.
-        this.autoBuyCount       = 0; // The amount that has gone to an autobuy.
-    }
+    this.gameData = {
+        name               : name, // The name of the item, not really used for anything except debugging.
+        ID                 : ID, // The identifier, usually prefixed to the name of the HTML Div.
+        baseCost           : baseCost, // The initial cost of the item, the future costs are calculated from 
+        baseUpgradeCost    : baseUpgradeCost, // The cost of the first upgrade, does not change.
+        nextUpgradeCost    : baseUpgradeCost, //The cost of the next upgrade, changes with each upgrade.
+        baseIncome         : baseCost / 15, // The initial amount of data this generates.
+        itemCount          : 0, // The amount you have of this item.
+        upgradeCount       : 0, // The number of upgrades you have for this item.
+        autoBuyCount       : 0 // The amount of work that has gone towards an autobuy, further explanation in autoBuy().
+    };
     // These are the names of the divs associated with this item in the DOM.
     this.div = {
         cost        : ID + 'Cost',
@@ -64,33 +64,33 @@ let itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
         upgradeCost : ID + 'UpgradeCost',
         upgradeName : ID + 'UpgradeName',
         upgradeDesc : ID + 'UpgradeDesc'
-    }
+    };
 };
 
 const BIC = 15; // Base item cost.
 const BUC = 11; // Base upgrade cost.
-// These cannot be const because they are changed when load() is called.
-//                                name                          ID       item cost          upgrade cost
-let item0  = new itemConstructor('Cyberdeck',                  'item0',  Math.pow(BIC, 1),  Math.pow(BUC, 3));
-let item1  = new itemConstructor('ICE Pick',                   'item1',  Math.pow(BIC, 2),  Math.pow(BUC, 4));
-let item2  = new itemConstructor('Botnet',                     'item2',  Math.pow(BIC, 3),  Math.pow(BUC, 5));
-let item3  = new itemConstructor('Femtocell Hijacker',         'item3',  Math.pow(BIC, 4),  Math.pow(BUC, 6));
-let item4  = new itemConstructor('Neural TETRA',               'item4',  Math.pow(BIC, 5),  Math.pow(BUC, 7));
-let item5  = new itemConstructor('Quantum Cryptograph',        'item5',  Math.pow(BIC, 6),  Math.pow(BUC, 8));
-let item6  = new itemConstructor('Infovault Mining',           'item6',  Math.pow(BIC, 7),  Math.pow(BUC, 9));
-let item7  = new itemConstructor('Neural Zombies',             'item7',  Math.pow(BIC, 8),  Math.pow(BUC, 10));
-let item8  = new itemConstructor('Satellite Jumpers',          'item8',  Math.pow(BIC, 9),  Math.pow(BUC, 11));
-let item9  = new itemConstructor('Dark Matter Semiconductors', 'item9',  Math.pow(BIC, 10), Math.pow(BUC, 12));
-let item10 = new itemConstructor('Actual Intelligence',        'item10', Math.pow(BIC, 11), Math.pow(BUC, 13));
-let item11 = new itemConstructor('Artificial Intelligences',   'item11', Math.pow(BIC, 12), Math.pow(BUC, 14));
-let item12 = new itemConstructor('Simulated Universes',        'item12', Math.pow(BIC, 13), Math.pow(BUC, 15));
-let itemList = [item0, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12];
+
+let itemList = [
+    new itemConstructor('Cyberdeck',                  'item0',  Math.pow(BIC, 1),  Math.pow(BUC, 3)),
+    new itemConstructor('ICE Pick',                   'item1',  Math.pow(BIC, 2),  Math.pow(BUC, 4)),
+    new itemConstructor('Botnet',                     'item2',  Math.pow(BIC, 3),  Math.pow(BUC, 5)),
+    new itemConstructor('Femtocell Hijacker',         'item3',  Math.pow(BIC, 4),  Math.pow(BUC, 6)),
+    new itemConstructor('Neural TETRA',               'item4',  Math.pow(BIC, 5),  Math.pow(BUC, 7)),
+    new itemConstructor('Quantum Cryptograph',        'item5',  Math.pow(BIC, 6),  Math.pow(BUC, 8)),
+    new itemConstructor('Infovault Mining',           'item6',  Math.pow(BIC, 7),  Math.pow(BUC, 9)),
+    new itemConstructor('Neural Zombies',             'item7',  Math.pow(BIC, 8),  Math.pow(BUC, 10)),
+    new itemConstructor('Satellite Jumpers',          'item8',  Math.pow(BIC, 9),  Math.pow(BUC, 11)),
+    new itemConstructor('Dark Matter Semiconductors', 'item9',  Math.pow(BIC, 10), Math.pow(BUC, 12)),
+    new itemConstructor('Actual Intelligence',        'item10', Math.pow(BIC, 11), Math.pow(BUC, 13)),
+    new itemConstructor('Artificial Intelligences',   'item11', Math.pow(BIC, 12), Math.pow(BUC, 14)),
+    new itemConstructor('Simulated Universes',        'item12', Math.pow(BIC, 13), Math.pow(BUC, 15))
+];
 
 function startUp() {
     // Runs when the page is loaded.
-    // Gives player enough data to buy the first cyberdeck.
-    dataHacked = 15;
-    totalDataHacked = 15;
+    // Gives player enough data to buy the first item.
+    dataHacked = BIC;
+    totalDataHacked = BIC;
     load(); // Loads the save, remove to disable autoloading on refresh.
     document.getElementById('all').style.display = 'inline'; // Display is set to none in css to hide the body while loading, this makes it visible.
     // This hides the item menus, HRs and upgrades when the game loads, checkForReveal() with show the relevant ones on the first tick.
@@ -100,17 +100,23 @@ function startUp() {
         visibilityLoader(item.div.HR, 0);
         visibilityLoader(item.div.upgradeMenu, 0);
     }
+    window.requestAnimationFrame(updateGame); // Calls the first tick of the game.
 }
 
 function save() {
     // Saves this stuff to a local key.
-    const savegame = {
-        dataHacked: dataHacked,
-        totalDataHacked: totalDataHacked,
-        itemList: itemList
+    const savegame = new function(){
+        this.dataHacked = dataHacked;
+        this.totalDataHacked = totalDataHacked;
+        //this.itemList = itemList;
+        //this.item0gameData = itemList[0].gameData
+        for (var i = 0; i < itemList.length; i++) {
+            this.gameData[i] = itemList[i].gameData;
+        }
     };
     // Objects get weird if you save them as a local key, so it is converted to a string first.
     localStorage.setItem(saveName, JSON.stringify(savegame));
+
 }
 
 function load() {
@@ -119,12 +125,7 @@ function load() {
     if (savegame) { // If save exists, load.
         dataHacked      = savegame.dataHacked;
         totalDataHacked = savegame.totalDataHacked;
-        itemList        = savegame.itemList; // Loads itemList.
-        // ItemList only references items, so each item has to be loaded.
-        for (let i = itemList.length - 1; i >= 0; i--) {
-            let item = window['item' + i]; 
-            item = itemList[i]; // Loads local object to global object.
-        }
+        itemList        = savegame.itemList;
     }
     // Upgrade text is not refreshed each tick so this sets them properly.
     for (let i = itemList.length - 1; i >= 0; i--) changeUpgradeText(itemList[i]);
@@ -134,7 +135,7 @@ function load() {
 function newGame() {
     // Deletes the save then reloads the game.
     if (confirm('Are you sure you want to start a new game?')) { // Nobody likes misclicks.
-        localStorage.removeItem('IdlepunkSave 0.2');
+        localStorage.removeItem(saveName);
         location.reload(true); //  reload(true) forces reload from server, ignores cache, this is probably not necessary.
     }
 }
@@ -147,27 +148,27 @@ function jackIn(number) {
 }
 
 function changeTheme(change = true){
-	// Changes the UI color theme.
-	if (change){ // If the theme should be changed, or if the currently selected theme should be applied.
-		if (currentTheme < colorTheme.length -1) currentTheme++;
-		else currentTheme = 0;
-	}	
+    // Changes the UI color theme.
+    if (change){ // If the theme should be changed, or if the currently selected theme should be applied.
+        if (currentTheme < colorTheme.length -1) currentTheme++;
+        else currentTheme = 0;
+    }   
     // Gets an array of elements of a class.
-	changeClassColor(document.getElementsByClassName('all'), colorTheme[currentTheme].bodyColor);
-	changeClassColor(document.getElementsByClassName('clickRed'), colorTheme[currentTheme].clickColor);
-	changeClassColor(document.getElementsByClassName('number'), colorTheme[currentTheme].numberColor);
+    changeClassColor(document.getElementsByClassName('all'), colorTheme[currentTheme].bodyColor);
+    changeClassColor(document.getElementsByClassName('clickRed'), colorTheme[currentTheme].clickColor);
+    changeClassColor(document.getElementsByClassName('number'), colorTheme[currentTheme].numberColor);
 
-	function changeClassColor(classArray, classColor){
+    function changeClassColor(classArray, classColor){
     // Sets an array of elements to a given color.
-		for (let i = classArray.length - 1; i >= 0; i--) {
-			classArray[i].style.color = classColor;
-		}
-	}
+        for (let i = classArray.length - 1; i >= 0; i--) {
+            classArray[i].style.color = classColor;
+        }
+    }
 }
 
 function HTMLEditor(elementID, input) {
     // changes the inner HTML of an element.
-    // Mostly used to change text but can also insert normal HTML stuff.
+    // Mostly used to change text but can also insert other HTML stuff.
     document.getElementById(elementID).innerHTML = input;
 }
 
@@ -189,12 +190,12 @@ function destroyFloats(input) {
 function formatBytes(bytes) {
     // Converts a number of Bytes into a data format. E.g. 3000 bytes -> 3KB.
     bytes = Math.round(bytes);
-    if (bytes < 999099999999999999999999999) {
+    if (bytes <= 999999999999999999999999999) { // 1000 YB = 1*10^27 Bytes, this is 1 less than that.
         if (bytes === 0) return '0 Bytes';
         if (bytes === 1) return '1 Byte';
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; // Can someone please invent more data sizes?
+        const dataSizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; // Can someone please invent more data sizes?
         const i = Math.floor(Math.log(bytes) / Math.log(1000));
-        return parseFloat((bytes / Math.pow(1000, i)).toFixed(3)) + ' ' + sizes[i];
+        return parseFloat((bytes / Math.pow(1000, i)).toFixed(3)) + ' ' + dataSizes[i];
     } else {
         // If it is larger than the largest data format (9999 Yottabytes), shows scientific notation of Bytes instead.
         bytes = bytes.toExponential(2);
@@ -209,7 +210,7 @@ function formatNumbers(number) {
     // if it is greater than 1 million it shows the number name, e.g. 1.34 million.
     number = Math.round(number);
     if (number > 99999) {
-        const sizes = [
+        const numberSizes = [
         'If you are reading this then you have found a bug! Please contact an exterminator.',
         'Thousand',
         'Million',
@@ -221,7 +222,7 @@ function formatNumbers(number) {
         'Septillion',
         'If you are reading this then you need to tell me to add more number sizes.'];
         const i = Math.floor(Math.log(number) / Math.log(1000));
-        return parseFloat((number / Math.pow(1000, i)).toFixed(0)) + ' ' + sizes[i];
+        return parseFloat((number / Math.pow(1000, i)).toFixed(0)) + ' ' + numberSizes[i];
     } 
     else return number; // If the number is smaller than 100k, it just displays it normally.
 }
@@ -263,7 +264,7 @@ function checkForReveal() {
     // Checks if any elements should be revealed.
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i]; // It just looks cleaner this way.
-        if (totalDataHacked >= itemList[0].gameData.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
+        if (totalDataHacked >= item.gameData.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
             visibilityLoader(item.div.itemMenu, 1);
             visibilityLoader(item.div.HR, 1);
         }
@@ -341,6 +342,7 @@ function upgrade(item) {
         item.gameData.nextUpgradeCost = upgradeCost(item);
         changeUpgradeText(item);
         visibilityLoader(item.div.upgradeMenu, 0);
+        checkForReveal();
     }
 }
 
@@ -370,8 +372,6 @@ function buyCost(item) {
 function changeUpgradeText(item) {
     // Changes upgrade text and upgraded cost.
     // Holy mother of god this got out of hand, should probably use a map or something instead of this.
-    // At the very least I could make a function to make it less repetitive.
-    // Or have name + desc lets.
     let upgradeName;
     let upgradeDesc;
     HTMLEditor(item.div.upgradeCost, formatBytes(item.gameData.nextUpgradeCost)); // Updates cost.
@@ -584,7 +584,8 @@ function changeUpgradeText(item) {
             }
             break;
                    // Dark Matter Semiconductors
-            switch (itemList[9].upgradeCount) {
+        case itemList[9]:
+            switch (item.gameData.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -675,8 +676,7 @@ function changeUpgradeText(item) {
             }
             break;
     }
-
-    function changeText(){
+    if (upgradeName && upgradeDesc) {
         HTMLEditor(item.div.upgradeName, upgradeName);
         HTMLEditor(item.div.upgradeDesc, upgradeDesc);
     }
@@ -701,7 +701,7 @@ function updateGame() {
         lastTick = now; // Updates the time of the most recent tick.
     }
     else if (ticksToExecute > 1) { // This must be an else if because TTE may be 0.
-        // If TTE is greater than 1 it means that the game has not been running, likely because either the player is alt tabbed or the game has been closed (or the game is running on a very slow computer).
+        // If TTE is greater than 1 it means that the game has not been running, likely because either the player is alt tabbed (or the game is running on a very slow computer).
         // Therefore we want to quickly do all the things that would have happened if the game was running as normal.
         // We want to do all the calculations without having to update the UI, reveal elements, or save the game until all ticks have been executed and the game is all caught up.
         for (let i = 0; i < ticksToExecute; i++) {
