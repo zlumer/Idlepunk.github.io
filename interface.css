@@ -2,6 +2,7 @@ body {
     background-color: #000;
     font-size: 1.8vw;
     font-size: 1.8vh;
+    overflow: hidden;
 }
 
 .all {
@@ -118,4 +119,17 @@ p {
     height: auto;
     margin-left: 10px;
     margin-right: 20;
+}
+
+.scroll {
+    overflow-y: auto;
+    width: auto;
+    height: 100vh;
+    scrollbar-face-color: #b46868;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+    display: none;
 }

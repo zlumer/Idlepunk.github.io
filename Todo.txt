@@ -1,13 +1,16 @@
-Keep data on screen as you scroll down.
-Add more number sizes.
-Add formatNumbers() for auto buying.
-Fix upgrade text orders.
-Spell check. -Data available. - Affect -> Effect.
-Change decimal points to 2 (maybe?).
-Add trailing zeroes to formatNumbers.
-Some bug involving screen jumping up and down, probably caused by number of decimal points changing from 0 to 3 rapidly.
-Readd save/export.
-Add max text size.
-Add warning for unsupported browsers.
-Add upgrade text to item objects.
-Remove total data hacked (maybe?).
+To do.
+	Keep data on screen as you scroll down.
+	Add more number sizes.
+	Add formatNumbers() for auto buying.
+	Fix upgrade text orders.
+	Spell check. -Data available. - Affect -> Effect.
+	Change decimal points to 2 (maybe?).
+	Add trailing zeroes to formatNumbers.
+	Some bug involving screen jumping up and down, probably caused by number of decimal points changing from 0 to 3 rapidly.
+	Readd save/export.
+	Add max text size.
+	Add warning for unsupported browsers.
+	Add upgrade text to item objects.
+	Remove total data hacked (maybe?).
+
+Done.
