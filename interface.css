@@ -114,7 +114,6 @@ p {
 }
 
 .flex-item {
-
     width: 50%;
     height: auto;
     margin-left: 10px;
@@ -124,7 +123,7 @@ p {
 .scroll {
     overflow-y: auto;
     width: auto;
-    height: 100vh;
+    height: 60vh;
     scrollbar-face-color: #b46868;
 }
 
