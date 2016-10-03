@@ -93,6 +93,7 @@ const itemList = [
 // 2d arrays of upgrade names and descriptions.
 // Accessed by:
 // itemList[i].upgradeText[upgradeCount][0 = name | 1 = desc].
+// itemList[0].upgradeText[3][1] will return the description for the 4th upgrade.
 itemList[0].upgradeText = [
     ['Upgrade to an Ergonomic Deck',    'As part of an initiative to lower employee suicide rates, Chui-Bazhusko Multinational developed the Ergonomic Deck. It gently releases both calming and energizing psychotropics into the palms of users.'],
     ['Install Neural Interfaces',       'First developed by triGen Consolidated, the Neural Interface allows humans to traverse cyberspace using nothing but their brains. In addition, atrophied limbs can save you money on food.'],
@@ -281,6 +282,7 @@ function changeTheme(change = true){
     changeClassColor(document.getElementsByClassName('bodyAll'), colorTheme[currentTheme].bodyColor);
     changeClassColor(document.getElementsByClassName('clickRed'), colorTheme[currentTheme].clickColor);
     changeClassColor(document.getElementsByClassName('number'), colorTheme[currentTheme].numberColor);
+    changeClassColor(document.getElementsByClassName('hr'), colorTheme[currentTheme].bodyColor); // This is weird but HR doesn't inherit color properly in Firefox so this is necessary.
     document.getElementById('item0HR').style.color = colorTheme[currentTheme].numberColor;
     function changeClassColor(classArray, classColor){
     // Sets an array of elements to a given color.
@@ -553,8 +555,11 @@ function buyCost(item) {
 function changeUpgradeText(item) {
     // Changes what is displayed as the upgrade name, description and upgraded cost.
     //                  item.upgradeText[item.let.upgradeCount][0=name | 1=Desc]
-    const upgradeName = item.upgradeText[item.let.upgradeCount][0];
-    const upgradeDesc = item.upgradeText[item.let.upgradeCount][1];
+    let upgradeCount = item.let.upgradeCount;
+    if (upgradeCount > 4) upgradeCount = 4; // The 4th upgrade is the default one that will appear over and over again.
+
+    const upgradeName = item.upgradeText[upgradeCount][0];
+    const upgradeDesc = item.upgradeText[upgradeCount][1];
 
     HTMLEditor(item.div.upgradeCost, formatBytes(item.let.nextUpgradeCost)); // Updates cost.
     HTMLEditor(item.div.upgradeName, upgradeName); // Updates name.

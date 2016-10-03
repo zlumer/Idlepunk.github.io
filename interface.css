@@ -74,8 +74,8 @@ body {
     margin-right: 10px;
 }
 
-hr {
-    background-color: #000;
+.hr {
+    color: orange;
     border-top: 1px dashed;
     border-bottom: 1px dashed;
 }
