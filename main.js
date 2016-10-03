@@ -7,7 +7,7 @@
 A thing by Asher.
 */                
 /*jshint esversion: 6 */                  
-const saveName = 'idlepunkSave 0.9'; // The name used in local storage, change if an update will break using old saves.        
+const saveName = 'idlepunkSave 0.11'; // The name used in local storage, change if an update will break using old saves.        
 const tickRate = 10; // The number of ticks per second.
 let lastTick = new Date().getTime(); // The time that the last tick occurred
 let autoSaveTimer = 0; // Increases every tick so that the game doesn't auto save every tick.
@@ -39,17 +39,20 @@ const colorTheme = [ // An array of objects, each object is a theme.
 }];
 // Item Construction.
 const itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
-    this.gameData = {
+    this.const = { // These items should never change.
         name               : name, // The name of the item, not really used for anything except debugging.
         ID                 : ID, // The identifier, usually prefixed to the name of the HTML Div.
         baseCost           : baseCost, // The initial cost of the item, the future costs are calculated from 
         baseUpgradeCost    : baseUpgradeCost, // The cost of the first upgrade, does not change.
-        nextUpgradeCost    : baseUpgradeCost, //The cost of the next upgrade, changes with each upgrade.
         baseIncome         : baseCost / 15, // The initial amount of data this generates.
+    };
+
+    this.let = { // These items should change and be saved to local storage.
+        nextUpgradeCost    : baseUpgradeCost, //The cost of the next upgrade, changes with each upgrade.
         itemCount          : 0, // The amount you have of this item.
         upgradeCount       : 0, // The number of upgrades you have for this item.
         autoBuyCount       : 0 // The amount of work that has gone towards an autobuy, further explanation in autoBuy().
-    };
+    }
     // These are the names of the divs associated with this item in the DOM.
     this.div = {
         cost        : ID + 'Cost',
@@ -111,9 +114,9 @@ function save() {
         this.dataHacked = dataHacked;
         this.totalDataHacked = totalDataHacked;
         this.currentTheme = currentTheme;
-        this.gameData = []; // gameData gets saved, while div does not.
+        this.let = []; // let gets saved, while const and div do not.
         for (let i = itemList.length - 1; i >= 0; i--) {
-            this.gameData[i] = itemList[i].gameData;
+            this.let[i] = itemList[i].let;
         }
     };
     // Objects get weird if you save them as a local key, so it is converted to a string first.
@@ -131,14 +134,31 @@ function load() {
         // Loads stuff from object.
         dataHacked = savegame.dataHacked;
         totalDataHacked = savegame.totalDataHacked;
-        for (let i = savegame.gameData.length - 1; i >= 0; i--) {
-            itemList[i].gameData = savegame.gameData[i];
+        for (let i = savegame.let.length - 1; i >= 0; i--) {
+            // Checks if item exists in save, then loads it.
+            if (typeof savegame.let[i] !== 'undefined') itemList[i].let = savegame.let[i];
+            else console.log (savegame.let[i] + ' was undefined.')
         }
         currentTheme = savegame.currentTheme;
         changeTheme(false);
         // Upgrade text is not refreshed each tick so this sets the upgrade text properly.
         for (let i = itemList.length - 1; i >= 0; i--) changeUpgradeText(itemList[i]);
     }
+}
+
+function exportSave() {
+    // Puts the save in a prompt box
+    save();
+    let savegame = localStorage.getItem(saveName);
+    window.prompt('Your save: ', savegame);
+}
+
+function importSave() {
+    // Puts the given string in local storage.
+    var save = prompt('Paste save here');
+    localStorage.setItem(saveName, save);
+    load();
+    location.reload();
 }
 
 function newGame() {
@@ -163,7 +183,7 @@ function changeTheme(change = true){
         else currentTheme = 0;
     }   
     // Gets an array of elements of a class.
-    changeClassColor(document.getElementsByClassName('all'), colorTheme[currentTheme].bodyColor);
+    changeClassColor(document.getElementsByClassName('bodyAll'), colorTheme[currentTheme].bodyColor);
     changeClassColor(document.getElementsByClassName('clickRed'), colorTheme[currentTheme].clickColor);
     changeClassColor(document.getElementsByClassName('number'), colorTheme[currentTheme].numberColor);
 
@@ -210,7 +230,7 @@ function formatBytes(bytes) {
         //num = num + ' ' + dataSizes[i]; 
     } else {
         // If it is larger than the largest data format (9999 Yottabytes), shows scientific notation of Bytes instead.
-        bytes = bytes.toExponential(dp);
+        bytes = bytes.toExponential(0);
         bytes += ' Bytes';
         return bytes;
     }
@@ -288,7 +308,7 @@ function maxItem(item) {
     // n = the number of upgrades.
     // u = the upgrade where you want maxItem changes to kick in.           
     // max items = 100 * 10^(n-u)
-    if (item.gameData.upgradeCount >= 2) return 100 * Math.pow(10, (item.gameData.upgradeCount - 2)); 
+    if (item.let.upgradeCount >= 2) return 100 * Math.pow(10, (item.let.upgradeCount - 2)); 
     else return 100; // 100 is the default number of max items.
 }
 
@@ -300,7 +320,7 @@ function refreshUI() {
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i];
         HTMLEditor(item.div.numberMax, formatNumbers(maxItem(item))); // Max number of items.
-        HTMLEditor(item.div.itemCount, formatNumbers(item.gameData.itemCount)); // Number of items.
+        HTMLEditor(item.div.itemCount, formatNumbers(item.let.itemCount)); // Number of items.
         HTMLEditor(item.div.cost, formatBytes(buyCost(item))); // Item cost.
         changeUpgradeText(item);
     }
@@ -310,12 +330,12 @@ function checkForReveal() {
     // Checks if any elements should be revealed.
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i]; // It just looks cleaner this way.
-        if (totalDataHacked >= item.gameData.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
+        if (totalDataHacked >= item.const.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
             visibilityLoader(item.div.itemMenu, true);
             document.getElementById(item.div.itemFlex).style.display = 'flex';
             visibilityLoader(item.div.HR, true);
         }
-        if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, true); // An upgrade is revealed when total data is greater than the cost of the upgrade.
+        if (totalDataHacked >= item.let.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, true); // An upgrade is revealed when total data is greater than the cost of the upgrade.
         else visibilityLoader(item.div.upgradeMenu, false);
     }
 }
@@ -332,10 +352,10 @@ function increment(updateUI = true) {
 
         const item = itemList[i];
         // Maths!
-        incomePerItemPerTick    = (item.gameData.baseIncome / tickRate) * Math.pow(2, item.gameData.upgradeCount);
+        incomePerItemPerTick    = (item.const.baseIncome / tickRate) * Math.pow(2, item.let.upgradeCount);
         incomePerItemPerSecond  = incomePerItemPerTick * tickRate;
-        incomePerTypePerTick    = incomePerItemPerTick * item.gameData.itemCount;
-        incomePerTypePerSecond  = incomePerItemPerSecond * item.gameData.itemCount;
+        incomePerTypePerTick    = incomePerItemPerTick * item.let.itemCount;
+        incomePerTypePerSecond  = incomePerItemPerSecond * item.let.itemCount;
         // Increases the data.
         dataHacked += incomePerTypePerTick;
         totalDataHacked += incomePerTypePerTick;
@@ -365,16 +385,16 @@ function autoBuy(firstItem, secondItem, updateUI = true) {
     // Every 1 secondItems will add 0.1 to firstItem.autoBuyCount per tick, once autoBuyCount is >= than 1 it buys an item from the tier below.
     const max = maxItem(firstItem);
     // If the requisite upgrade is met and you have less than the max number if items.
-    if (secondItem.gameData.upgradeCount >= 4 && firstItem.gameData.itemCount < max) {
-        firstItem.gameData.autoBuyCount += secondItem.gameData.itemCount / (tickRate * 10);
-        if (firstItem.gameData.autoBuyCount >= 1){
-            firstItem.gameData.itemCount += Math.floor(firstItem.gameData.autoBuyCount); // If autoBuyCount rounds to 1 or more, it will buy.
-            firstItem.gameData.autoBuyCount -= Math.floor(firstItem.gameData.autoBuyCount); // Subtracts the amount used to buy. 
+    if (secondItem.let.upgradeCount >= 4 && firstItem.let.itemCount < max) {
+        firstItem.let.autoBuyCount += secondItem.let.itemCount / (tickRate * 10);
+        if (firstItem.let.autoBuyCount >= 1){
+            firstItem.let.itemCount += Math.floor(firstItem.let.autoBuyCount); // If autoBuyCount rounds to 1 or more, it will buy.
+            firstItem.let.autoBuyCount -= Math.floor(firstItem.let.autoBuyCount); // Subtracts the amount used to buy. 
         }
         // If autoBuy buys more than the max allowed items, sets the number of items to the max.
-        if (firstItem.gameData.itemCount > max) firstItem.gameData.itemCount = max;
+        if (firstItem.let.itemCount > max) firstItem.let.itemCount = max;
         // Updates UI with the rate that items are being auto bought.
-        const itemsPerSecond = secondItem.gameData.itemCount / tickRate;
+        const itemsPerSecond = secondItem.let.itemCount / tickRate;
         if (updateUI) {
             if (itemsPerSecond < 100) HTMLEditor(secondItem.div.autobuyRate, itemsPerSecond.toFixed(1)); // Displays auto buys per second as 3.3 / 1.0
             else HTMLEditor(secondItem.div.autobuyRate, formatNumbers(itemsPerSecond)); // Displays auto buys per second as 10 million.
@@ -386,11 +406,11 @@ function autoBuy(firstItem, secondItem, updateUI = true) {
 
 function upgrade(item) {
     // Upgrades an item.
-    if (dataHacked >= item.gameData.nextUpgradeCost) { // Checks if player can afford upgrade.
-        dataHacked -= item.gameData.nextUpgradeCost; // Subtracts cost of upgrade.
-        item.gameData.upgradeCount++; // Increments upgrade counter.
+    if (dataHacked >= item.let.nextUpgradeCost) { // Checks if player can afford upgrade.
+        dataHacked -= item.let.nextUpgradeCost; // Subtracts cost of upgrade.
+        item.let.upgradeCount++; // Increments upgrade counter.
         // Recalculates cost of next upgrade.
-        item.gameData.nextUpgradeCost = upgradeCost(item);
+        item.let.nextUpgradeCost = upgradeCost(item);
         changeUpgradeText(item);
         visibilityLoader(item.div.upgradeMenu, false);
         checkForReveal();
@@ -399,7 +419,7 @@ function upgrade(item) {
 
 function upgradeCost(item) {
     // Calculates cost of next upgrade.
-    return Math.floor(item.gameData.baseUpgradeCost * Math.pow(10, item.gameData.upgradeCount));
+    return Math.floor(item.const.baseUpgradeCost * Math.pow(10, item.let.upgradeCount));
 }
 
 function buyItem(item, count) {
@@ -407,9 +427,9 @@ function buyItem(item, count) {
     for (let i = 0; i < count; i++) { // Tries to by this many items.
         const max = maxItem(item);
         const cost = buyCost(item); // Calculates cost of item.
-        if (dataHacked >= cost && item.gameData.itemCount < max) { // Player must be able to afford the item and have less than the max allowed items.
+        if (dataHacked >= cost && item.let.itemCount < max) { // Player must be able to afford the item and have less than the max allowed items.
             dataHacked -= cost; // Subtracts cost of item.
-            item.gameData.itemCount++; // Increments item.
+            item.let.itemCount++; // Increments item.
         } 
         else break; // If the player cannot afford or has the max number of items, stop trying to buy items.
     }
@@ -417,7 +437,7 @@ function buyItem(item, count) {
 
 function buyCost(item) {
     // Calculates cost of an item based on the base cost of the item and the number of items, cost is exponential with an exponent of 1.15 (thanks CC).
-    return Math.floor(item.gameData.baseCost * Math.pow(1.15, item.gameData.itemCount));
+    return Math.floor(item.const.baseCost * Math.pow(1.15, item.let.itemCount));
 }
 
 function changeUpgradeText(item) {
@@ -425,11 +445,11 @@ function changeUpgradeText(item) {
     // Holy mother of god this got out of hand, should probably use a map or object or something.
     let upgradeName;
     let upgradeDesc;
-    HTMLEditor(item.div.upgradeCost, formatBytes(item.gameData.nextUpgradeCost)); // Updates cost.
+    HTMLEditor(item.div.upgradeCost, formatBytes(item.let.nextUpgradeCost)); // Updates cost.
     switch (item) { // Checks what item is being upgraded.
         // Cyberdeck 
         case itemList[0]:
-            switch (item.gameData.upgradeCount) { // Checks what upgrades the item already has.
+            switch (item.let.upgradeCount) { // Checks what upgrades the item already has.
                 case 0: // If the item has 0 upgrades, no change is required.
                     break;
                 case 1:
@@ -452,7 +472,7 @@ function changeUpgradeText(item) {
             break;
             // ICE Pick
         case itemList[1]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -475,7 +495,7 @@ function changeUpgradeText(item) {
             break;
             // Botnet
         case itemList[2]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -498,7 +518,7 @@ function changeUpgradeText(item) {
             break;
             // Femtocell
         case itemList[3]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -521,7 +541,7 @@ function changeUpgradeText(item) {
             break;
             // TETRA
         case itemList[4]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -544,7 +564,7 @@ function changeUpgradeText(item) {
             break;
             // Quantum Crypto
         case itemList[5]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -567,7 +587,7 @@ function changeUpgradeText(item) {
             break;
             // Infovault Mining
         case itemList[6]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -590,7 +610,7 @@ function changeUpgradeText(item) {
             break;
             // Neural Zombies
         case itemList[7]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -613,7 +633,7 @@ function changeUpgradeText(item) {
             break;
             // Satellite Jumpers
         case itemList[8]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -636,7 +656,7 @@ function changeUpgradeText(item) {
             break;
                    // Dark Matter Semiconductors
         case itemList[9]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -659,7 +679,7 @@ function changeUpgradeText(item) {
             break;
             // Art Int
         case itemList[10]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -682,7 +702,7 @@ function changeUpgradeText(item) {
             break;
             // Act Int
         case itemList[11]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:
@@ -705,7 +725,7 @@ function changeUpgradeText(item) {
             break;
             // Sim Universe
         case itemList[12]:
-            switch (item.gameData.upgradeCount) {
+            switch (item.let.upgradeCount) {
                 case 0:
                     break;
                 case 1:

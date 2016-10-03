@@ -15,7 +15,7 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-.wat {
+.unsupportedBrowser {
     display: inline;
     color: orange;
 }
