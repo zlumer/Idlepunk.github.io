@@ -3,15 +3,16 @@ To do.
 	Add formatNumbers() for auto buying.
 	Fix upgrade text orders.
 	Spell check. -Data available. - Affect -> Effect.
-	Change decimal points to 2 (maybe?).
-	Add trailing zeroes to formatNumbers.
 	Some bug involving screen jumping up and down, probably caused by number of decimal points changing from 0 to 3 rapidly.
 	Readd save/export.
-	Add max text size.
 	Add warning for unsupported browsers.
 	Add upgrade text to item objects.
 	Remove total data hacked (maybe?).
 Done.
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
+	Fix font size on large monitors.
+	Change decimal points to 2 (maybe?). When above 1000 bytes.
+	Add trailing zeroes to formatNumbers. When above 1000 bytes.
+
 

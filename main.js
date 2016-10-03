@@ -97,9 +97,9 @@ function startUp() {
     // This hides the item menus, HRs and upgrades when the game loads, checkForReveal() with show the relevant ones on the first tick.
     for (let i = itemList.length - 1; i >= 0; i--) { // Iterating backwards is better for performance as length only has to be calculated once.
         const item = itemList[i];
-        visibilityLoader(item.div.itemMenu, 0);
-        visibilityLoader(item.div.HR, 0);
-        visibilityLoader(item.div.upgradeMenu, 0);
+        visibilityLoader(item.div.itemMenu, false);
+        visibilityLoader(item.div.HR, false);
+        visibilityLoader(item.div.upgradeMenu, false);
     }
     window.requestAnimationFrame(updateGame); // Calls the first tick of the game.
 }
@@ -180,10 +180,9 @@ function HTMLEditor(elementID, input) {
     document.getElementById(elementID).innerHTML = input;
 }
 
-function visibilityLoader(elementID, visibility = 0) {
+function visibilityLoader(elementID, visibility = false) {
     // Either hides or shows an element depending on arguments.
-    if (visibility === 1) visibility = 'visible';
-    else if (visibility === 0) visibility = 'hidden';
+    visibility = visibility ? 'visible' : 'hidden';
     document.getElementById(elementID).style.visibility = visibility;
 }
 
@@ -199,14 +198,18 @@ function formatBytes(bytes) {
     // Converts a number of Bytes into a data format. E.g. 3000 bytes -> 3KB.
     bytes = Math.round(bytes);
     if (bytes <= 999999999999999999999999999) { // 1000 YB = 1*10^27 Bytes, this is 1 less than that.
+        let dp = 2;
+        if (bytes < 1000) dp = 0;
         if (bytes === 0) return '0 Bytes';
         if (bytes === 1) return '1 Byte';
         const dataSizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; // Can someone please invent more data sizes?
         const i = Math.floor(Math.log(bytes) / Math.log(1000));
-        return parseFloat((bytes / Math.pow(1000, i)).toFixed(3)) + ' ' + dataSizes[i];
+        let num = parseFloat((bytes / Math.pow(1000, i)).toFixed(dp))
+        return num.toFixed(dp) + ' ' + dataSizes[i];
+        //num = num + ' ' + dataSizes[i]; 
     } else {
         // If it is larger than the largest data format (9999 Yottabytes), shows scientific notation of Bytes instead.
-        bytes = bytes.toExponential(2);
+        bytes = bytes.toExponential(dp);
         bytes += ' Bytes';
         return bytes;
     }
@@ -273,12 +276,12 @@ function checkForReveal() {
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i]; // It just looks cleaner this way.
         if (totalDataHacked >= item.gameData.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
-            visibilityLoader(item.div.itemMenu, 1);
+            visibilityLoader(item.div.itemMenu, true);
             document.getElementById(item.div.itemFlex).style.display = 'flex';
-            visibilityLoader(item.div.HR, 1);
+            visibilityLoader(item.div.HR, true);
         }
-        if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, 1); // An upgrade is revealed when total data is greater than the cost of the upgrade.
-        else visibilityLoader(item.div.upgradeMenu, 0);
+        if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, false); // An upgrade is revealed when total data is greater than the cost of the upgrade.
+        else visibilityLoader(item.div.upgradeMenu, false);
     }
 }
 
@@ -350,7 +353,7 @@ function upgrade(item) {
         // Recalculates cost of next upgrade.
         item.gameData.nextUpgradeCost = upgradeCost(item);
         changeUpgradeText(item);
-        visibilityLoader(item.div.upgradeMenu, 0);
+        visibilityLoader(item.div.upgradeMenu, false);
         checkForReveal();
     }
 }

@@ -1,7 +1,5 @@
 body {
     background-color: #000;
-    font-size: 1.8vw;
-    font-size: 1.8vh;
     overflow: hidden;
 }
 
@@ -110,7 +108,6 @@ p {
     display: none;
     width: auto;
     height: auto;
-
 }
 
 .flex-item {
@@ -123,7 +120,7 @@ p {
 .scroll {
     overflow-y: auto;
     width: auto;
-    height: 60vh;
+    height: 70vh;
     scrollbar-face-color: #b46868;
 }
 
