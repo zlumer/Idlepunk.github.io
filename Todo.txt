@@ -4,6 +4,7 @@ To do:
 	Remove total data hacked (maybe?).
 	Add initial upgrade text to upgrade0
 	Add support for scientific notation instead of named numbers.
+	Things look weird in firefox.
 Done:
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
