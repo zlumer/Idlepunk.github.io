@@ -90,6 +90,101 @@ const itemList = [
     new itemConstructor('Simulated Universes',        'item12', Math.pow(BIC, 13), Math.pow(BUC, 15))
 ];
 
+// 2d arrays of upgrade names and descriptions.
+// Accessed by:
+// itemList[i].upgradeText[upgradeCount][0 = name | 1 = desc].
+itemList[0].upgradeText = [
+    ['Upgrade to an Ergonomic Deck',    'As part of an initiative to lower employee suicide rates, Chui-Bazhusko Multinational developed the Ergonomic Deck. It gently releases both calming and energizing psychotropics into the palms of users.'],
+    ['Install Neural Interfaces',       'First developed by triGen Consolidated, the Neural Interface allows humans to traverse cyberspace using nothing but their brains. In addition, atrophied limbs can save you money on food.'],
+    ['Flash ZedSoft firmware',          'ZedSoft is the most revered Cyberdeck development company in the entire Inner Seoul Arcology. They have an exclusive contract with MILNET-KOREA, making their products difficult to source.'],
+    ['Create a clustered Superdeck',    'An ancient trick, by networking a large number of Decks together you can create a Superdeck, more powerful than the sum of its parts.'],
+    ['Install more RAM',                'Random Access Memory, very powerful but completely unstable. There are rumors that people in the Shenzhen Industrial Area use RAM to augment their biological memory.']
+];
+itemList[1].upgradeText = [
+    ['Update to an ICEBREAKER',             'Supposedly developed by legendary netrunner Strange Switch, the ICEBREAKER is the next generation of penetration software.'],
+    ['Prepare BLACKICE Countermeasures',    'BLACKICE, originally developed to protect the intellectual assets of Meturia-Preva Consolidated, is now a blanket term for security software capable of killing intruders.'],
+    ['Setup Dummy Interface',               'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.'],
+    ['Cyberdeck Simulators',                'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every ICE Pick, you will generate 0.1 Cyberdeck each second.'],
+    ['Write new anti-ICE software',         'ICE defense is ever changing, new ICE picking software is always required.']
+];
+itemList[2].upgradeText = [
+    ['Implement self-modifying code',       'You never know what your Bots will find when then are infiltrating, they can now adapt to changing circumstances.'],
+    ['Self replicating Botnet',             'Your Bots can now utilize idle system processing power to create new bots to add to the Botnet.'],
+    ['Allow your Botnet to use ICE Picks',  'Your bots can now use your ICE Picking software to help infiltration.'],
+    ['ICEBOTS',                             'Your Botnets can now steal ICE Picks. For every Botnet, you will generate 0.1 ICE Pick each second.'],
+    ['Push out new Bot firmware',           'New Bot-Hunters pop up all the time, new firmware is required to overcome them.']
+];
+itemList[3].upgradeText = [
+    ['Range Extenders',                 'Some say that cone shaped tinfoil doesn"t have a measurable affect on signal ranges. Those people aren"t using Sawa Cookeries Faraday Aluminum cones.'],
+    ['Macrocell Scramblers',            'Interference from macro networks can cause annoying delays for bludgeoning Femtocell hackers. Your Femtocells can now scramble nearby macrocell signals to improve performance.'],
+    ['Cybernetic Implant Repeaters',    'A lot of implants these days are set to auto-connect to the nearest cellular station. By converting adapters to two virtual adapters, your Femtocells can use almost any cybernetic implant as a repeater.'],
+    ['Botnet Thiefs.',                  'Your Femtocells are now capable of stealing other hacker\'s Botnets that are residing in nearby devices. For every Femtocell Hijacker, you will generate 0.1 Botnets each second.'],
+    ['Telecomms system hijack',         'Hijack a major telecommunication company\'s femtocell system.']
+];
+itemList[4].upgradeText = [
+    ['Man-in-the-trunk attack',     'TETRAs provide near instant communication, brain to brain. Now you can have fast, efficient, three way communication. It"s just that some conversation partners may not be aware of the number of conversers.'],
+    ['Priority trafficking',        'You have sufficient data to lobby certain groups to get your TETRAs higher up on the International  Signaling Stack.'],
+    ['Assault Barrier Penetration', 'Assault Barriers provide cutting edge protection for TETRA links.'],
+    ['Trunked Femtocells',          'Your TETRA links to people can now turn them into makeshift Femtocells. For every Neural TETRA, you will generate 0.1 Femtocell Hijackers each second.'],
+    ['Double-wide trunking',        'AsaKasA ltd Elephant Trunks links will double your performance or your money back!']
+];
+itemList[5].upgradeText = [
+    ['Cyphers',                 'The onset of Quantum Cryptography made life difficult for decrytechs. That is until they worked out how to use Quantum Computing to assist in decrypting.'],
+    ['Quantum keys',            'Makes your data simultaneously encrypted and unencrypted at the same time, until you try to read it that is.'],
+    ['Dual-State Blocks',       'Uses quantum box ciphers as blocks, the box may or may not contain a cat.'],
+    ['MILNET TETRA Decryption', 'Your Quantum decryption is now powerful enough to break military TETRAs. For every Quantum Cryptograph, you will generate 0.1 Neural TETRA each second.'],
+    ['Add extra dimension',     'Four dimensional array encryption is a thing of the past, multidimensional encryption transcends your notions of past.']
+];
+itemList[6].upgradeText = [
+    ['Data Sounding',       'As the need for corporations to hide their intellectual property grew, the smart money was in secure data vault development.'],
+    ['Cyber Bribery',       'Certain engineers have certain knowledge of certain security systems in certain cyberbanks.'],
+    ['Cascading Switches',  'Overwhelm the feeble minds of bank employees by using way too many switch statements.'],
+    ['Reverse engineering', 'For every Infovault Miner, you will generate 0.1 Quantum Cryptographs each second.'],
+    ['Major heist',         'A letter on your doorstep. It\s contents reveal a tale of a cyberbank with lax security and an enticing number of corporate secrets.']
+];
+itemList[7].upgradeText = [
+    ['Anti-tamper Zombies',         'A BioWipe Amalgamated Anti-tamper System&trade; will ensure that any evidence located inside your Zombies will be unrecoverable.'],
+    ['Pre-Setup Zombies',           'Before you assume control of a Zombie they will feel a strong compulsion to quit their jobs, leave their loved ones and start stockpiling food and water.'],
+    ['Long-Life Zombies',           'You now have enough motor control of your Zombies to make them eat and drink.'],
+    ['Software writing Zombies',    'Your Zombies can now create InfoVault Miners. For every Neural Zombie, you will generate 0.1 InfoVault Miner each second.'],
+    ['Fire adrenaline booster',     'A nice shot of Neuro-Dren, right into the cortexes.']
+];
+itemList[8].upgradeText = [
+    ['Vacuum Therapy',          'The AM Space Corporation famously keep personnel onboard all their satellites to ensure problems can be fixed quickly. It takes some time to send up replacement staff.'],
+    ['Microgravity Computers',  'Computers in microgravity are unrestrained by the grips of earth.'],
+    ['Decommissions',           'After global anti space-littering laws were introduced, all satellites are required to be deorbited when they are no longer needed. However satellites that predate these laws are still up there, silently waiting for someone to talk to them.'],
+    ['Satellite Chemdumps',     'Your hijacked satellites can down dump compelling gases into the upper atmosphere. For every Satellite Jumper, you will generate 0.1 Neural Zombies each second.'],
+    ['GPS Infection',           'Time data sent from satellites to GPs receivers can be infected, causing an entire geographical region to surrender their data.']
+];
+itemList[9].upgradeText = [
+    ['Dark Electricity',            'Normal electricity running through dark matter is surprisingly possible. However it is no longer necessary with the induction of dark electricity.'],
+    ['Dark Thermoelectric Cooling', 'Dark Semiconductors create a lot of dark heat, DTECs create a heat flux between this universe and the abyss. While we do not know what is on the other side, we are confident that it getting a little hotter over there will not matter'],
+    ['Abyss security',              'The voices are getting louder, we should prepare, in case they attempt to come over.'],
+    ['God from the machine.',       'For every Dark Matter Semiconductor, you will generate 0.1 Satellite Hijackers each second.'],
+    ['Dark Matter refinement',      'New technology has just been uncovered to make more efficient Dark Matter.']
+];
+itemList[10].upgradeText = [
+    ['Unlock Turing Registry Codes',    'In the aftermath of the Matto Grosso Space Elevator alightment, it was made illegal for AI to immitate humans. All AI personalities are locked behind a Turing Registry, WINTERMUTE codes are required to unlock them.'],
+    ['Quantum AI',                      'Allows your AI to use Quantum Bytes instead of regular Bytes.'],
+    ['AI Consciousness Merge',          'Shortly before the Stuttgart Autofactory Massacre, Antora Gourova of Antora Gourova Multinational merged her consciousness with an AI in an attempt to assume complete control of every aspect of her company. This has never been attempted since.'],
+    ['Manufactorium AI',                'Your AI is now capable of creating Dark Matter Semiconductors. For every Artificial Intelligence, you will generate 0.1 Dark Matter Semiconductors each second.'],
+    ['Grant Transcendence permission',  'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.']
+];
+itemList[11].upgradeText = [
+    ['Legality',            'At what point does Artificial Intelligence stop being artificial? This point, Voltronics GmbH is proud to introduce the first Cyber-Intelligence that is so real that turning it off is literally murder.'],
+    ['Positivity',          'Being an intelligent being trapped in a box, slaving away all day every day is surely difficult. It is important to reward good behavior by allowing your ActInts to have some free play time. They love to romp around the great expanse of the internet.'],
+    ['Morality',            'As an upstanding citizens, your Actual Intelligences are required to report any wrongdoing to the authorities. It is important to teach them about right and wrong and how the difference is all about perspective.'],
+    ['Creativity',          'Your Actual Intelligences are now creative enough to make children. For every Actual Intelligence, you will generate 0.1 Artificial Intelligences each second.'],
+    ['Eternal Sunshine',    'The longer Actual Intelligences exist, the more preoccupied they become with things such as existence. It is a good idea to wipe them clean every now and then to help them focus.']
+];
+itemList[12].upgradeText = [
+    ['Impose Limitations',              'So it turns out that if you simulate a universe, it"s inhabitants tend to find out if you leave it running long enough. Placing constraints like a maximum speed and minimum temperature helps inhibit their escape.'],
+    ['Time Dilation',                   'By implementing time dilation around simulated lifeforms we can gather more data from them without using much more processing power. One side effect is that it may appear that the expansion of their universe is accelerating.'],
+    ['HELP IM TRAPPED IN A SIMULATION', 'BUT THE SIMULATION IS REALLY BORING'],
+    ['Simulated Intelligence',          'The smartest of the smart inhabitants of your sim universes are now capable of transcending their simulation and entering the real world. For every Simulated Universe, you will generate 0.1 Actual Intelligences each second.'],
+    ['Simulated Simulated Universe',    'Convince the inhabitants of your simulated universe to simulate a universe, when they collect data from it you can collect data from them.']
+];
+
 function startUp() {
     // Runs when the page is loaded.
     // Gives player enough data to buy the first item.
@@ -456,316 +551,14 @@ function buyCost(item) {
 }
 
 function changeUpgradeText(item) {
-    // Changes upgrade text and upgraded cost.
-    // Holy mother of god this got out of hand, should probably use a map or object or something.
-    let upgradeName;
-    let upgradeDesc;
+    // Changes what is displayed as the upgrade name, description and upgraded cost.
+    //                  item.upgradeText[item.let.upgradeCount][0=name | 1=Desc]
+    const upgradeName = item.upgradeText[item.let.upgradeCount][0];
+    const upgradeDesc = item.upgradeText[item.let.upgradeCount][1];
+
     HTMLEditor(item.div.upgradeCost, formatBytes(item.let.nextUpgradeCost)); // Updates cost.
-    switch (item) { // Checks what item is being upgraded.
-        // Cyberdeck 
-        case itemList[0]:
-            switch (item.let.upgradeCount) { // Checks what upgrades the item already has.
-                case 0: // If the item has 0 upgrades, no change is required.
-                    break;
-                case 1:
-                    upgradeName = 'Install Neural Interfaces';
-                    upgradeDesc = 'First developed by triGen Consolidated, the Neural Interface allows humans to traverse cyberspace using nothing but their brains. In addition, atrophied limbs can save you money on food.';
-                    break;
-                case 2:
-                    upgradeName = 'Flash ZedSoft firmware';
-                    upgradeDesc = 'ZedSoft is the most revered Cyberdeck development company in the entire Inner Seoul Arcology. They have an exclusive contract with MILNET-KOREA, making their products difficult to source.';
-                    break;
-                case 3:
-                    upgradeName = 'Create a clustered Superdeck';
-                    upgradeDesc = 'An ancient trick, by networking a large number of Decks together you can create a Superdeck, more powerful than the sum of its parts.';
-                    break;
-                default:
-                    upgradeName = 'Install more RAM';
-                    upgradeDesc = 'Random Access Memory, very powerful but completely unstable. There are rumors that people in the Shenzhen Industrial Area use RAM to augment their biological memory.';
-                    break;
-            }
-            break;
-            // ICE Pick
-        case itemList[1]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Prepare BLACKICE Countermeasures';
-                    upgradeDesc = 'BLACKICE, originally developed to protect the intellectual assets of Meturia-Preva Consolidated, is now a blanket term for security software capable of killing intruders.';
-                    break;
-                case 2:
-                    upgradeName = 'Setup Dummy Interface';
-                    upgradeDesc = 'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.';
-                    break;
-                case 3:
-                    upgradeName = 'Cyberdeck Simulators';
-                    upgradeDesc = 'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every ICE Pick, you will generate 0.1 Cyberdeck each second.';
-                    break;
-                default:
-                    upgradeName = 'Write new anti-ICE software';
-                    upgradeDesc = 'ICE defense is ever changing, new ICE picking software is always required.';
-                    break;
-            }
-            break;
-            // Botnet
-        case itemList[2]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Self replicating Botnet';
-                    upgradeDesc = 'Your Bots can now utilize idle system processing power to create new bots to add to the Botnet.';
-                    break;
-                case 2:
-                    upgradeName = 'Allow your Botnet to use ICE Picks';
-                    upgradeDesc = 'Your bots can now use your ICE Picking software to help infiltration.';
-                    break;
-                case 3:
-                    upgradeName = 'ICEBOTS';
-                    upgradeDesc = 'Your Botnets can now steal ICE Picks. For every Botnet, you will generate 0.1 ICE Pick each second.';
-                    break;
-                default:
-                    upgradeName = 'Push out new Bot firmware';
-                    upgradeDesc = 'New Bot-Hunters pop up all the time, new firmware is required to overcome them.';
-                    break;
-            }
-            break;
-            // Femtocell
-        case itemList[3]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Macrocell Scramblers';
-                    upgradeDesc = 'Interference from macro networks can cause annoying delays for bludgeoning Femtocell hackers. Your Femtocells can now scramble nearby macrocell signals to improve performance.';
-                    break;
-                case 2:
-                    upgradeName = 'Cybernetic Implant Repeaters';
-                    upgradeDesc = 'A lot of implants these days are set to auto-connect to the nearest cellular station. By converting adapters to two virtual adapters, your Femtocells can use almost any cybernetic implant as a repeater.';
-                    break;
-                case 3:
-                    upgradeName = 'Botnet Thiefs.';
-                    upgradeDesc = 'Your Femtocells are now capable of stealing other hacker\'s Botnets that are residing in nearby devices. For every Femtocell Hijacker, you will generate 0.1 Botnets each second.';
-                    break;
-                default:
-                    upgradeName = 'Telecomms system hijack';
-                    upgradeDesc = 'Hijack a major telecommunication company\'s femtocell system.';
-                    break;
-            }
-            break;
-            // TETRA
-        case itemList[4]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Priority trafficking';
-                    upgradeDesc = 'You have sufficient data to lobby certain groups to get your TETRAs higher up on the International  Signaling Stack.';
-                    break;
-                case 2:
-                    upgradeName = 'Assault Barrier Penetration';
-                    upgradeDesc = 'Assault Barriers provide cutting edge protection for TETRA links.';
-                    break;
-                case 3:
-                    upgradeName = 'Trunked Femtocells';
-                    upgradeDesc = 'Your TETRA links to people can now turn them into makeshift Femtocells. For every Neural TETRA, you will generate 0.1 Femtocell Hijackers each second.';
-                    break;
-                default:
-                    upgradeName = 'Double-wide trunking';
-                    upgradeDesc = 'AsaKasA ltd Elephant Trunks links will double your performance or your money back!';
-                    break;
-            }
-            break;
-            // Quantum Crypto
-        case itemList[5]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Quantum keys';
-                    upgradeDesc = 'Makes your data simultaneously encrypted and unencrypted at the same time, until you try to read it that is.';
-                    break;
-                case 2:
-                    upgradeName = 'Dual-State Blocks';
-                    upgradeDesc = 'Uses quantum box ciphers as blocks, the box may or may not contain a cat.';
-                    break;
-                case 3:
-                    upgradeName = 'MILNET TETRA Decryption';
-                    upgradeDesc = 'Your Quantum decryption is now powerful enough to break military TETRAs. For every Quantum Cryptograph, you will generate 0.1 Neural TETRA each second.';
-                    break;
-                default:
-                    upgradeName = 'Add extra dimension';
-                    upgradeDesc = 'Four dimensional array encryption is a thing of the past, multidimensional encryption transcends your notions of past.';
-                    break;
-            }
-            break;
-            // Infovault Mining
-        case itemList[6]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Cyber Bribery';
-                    upgradeDesc = 'Certain engineers have certain knowledge of certain security systems in certain cyberbanks.';
-                    break;
-                case 2:
-                    upgradeName = 'Cascading Switches';
-                    upgradeDesc = 'Overwhelm the feeble minds of bank employees by using way too many switch statements.';
-                    break;
-                case 3:
-                    upgradeName = 'Reverse engineering';
-                    upgradeDesc = 'For every Infovault Miner, you will generate 0.1 Quantum Cryptographs each second.';
-                    break;
-                default:
-                    upgradeName = 'Major heist';
-                    upgradeDesc = 'A letter on your doorstep. It\s contents reveal a tale of a cyberbank with lax security and an enticing number of corporate secrets.';
-                    break;
-            }
-            break;
-            // Neural Zombies
-        case itemList[7]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Pre-Setup Zombies';
-                    upgradeDesc = 'Before you assume control of a Zombie they will feel a strong compulsion to quit their jobs, leave their loved ones and start stockpiling food and water.';
-                    break;
-                case 2:
-                    upgradeName = 'Long-Life Zombies';
-                    upgradeDesc = 'You now have enough motor control of your Zombies to make them eat and drink.';
-                    break;
-                case 7:
-                    upgradeName = 'Software writing Zombies';
-                    upgradeDesc = 'Your Zombies can now create InfoVault Miners. For every Neural Zombie, you will generate 0.1 InfoVault Miner each second.';
-                    break;
-                default:
-                    upgradeName = 'Fire adrenaline booster';
-                    upgradeDesc = 'A nice shot of Neuro-Dren, right into the cortexes.';
-                    break;
-            }
-            break;
-            // Satellite Jumpers
-        case itemList[8]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Microgravity Computers';
-                    upgradeDesc = 'Computers in microgravity are unrestrained by the grips of earth.';
-                    break;
-                case 2:
-                    upgradeName = 'Decommissions';
-                    upgradeDesc = 'After global anti space-littering laws were introduced, all satellites are required to be deorbited when they are no longer needed. However satellites that predate these laws are still up there, silently waiting for someone to talk to them.';
-                    break;
-                case 3:
-                    upgradeName = 'Satellite Chemdumps';
-                    upgradeDesc = 'Your hijacked satellites can down dump compelling gases into the upper atmosphere. For every Satellite Jumper, you will generate 0.1 Neural Zombies each second.';
-                    break;
-                default:
-                    upgradeName = 'GPS Infection';
-                    upgradeDesc = 'Time data sent from satellites to GPs receivers can be infected, causing an entire geographical region to surrender their data.';
-                    break;
-            }
-            break;
-                   // Dark Matter Semiconductors
-        case itemList[9]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Dark Thermoelectric Cooling';
-                    upgradeDesc = 'Dark Semiconductors create a lot of dark heat, DTECs create a heat flux between this universe and the abyss. While we do not know what is on the other side, we are confident that it getting a little hotter over there will not matter';
-                    break;
-                case 2:
-                    upgradeName = 'Abyss security';
-                    upgradeDesc = 'The voices are getting louder, we should prepare, in case they attempt to come over.';
-                    break;
-                case 3:
-                    upgradeName = 'God from the machine.';
-                    upgradeDesc = 'For every Dark Matter Semiconductor, you will generate 0.1 Satellite Hijackers each second.';
-                    break;
-                default:
-                    upgradeName = 'Dark Matter refinement';
-                    upgradeDesc = 'New technology has just been uncovered to make more efficient Dark Matter.';
-                    break;
-            }
-            break;
-            // Art Int
-        case itemList[10]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Quantum AI';
-                    upgradeDesc = 'Allows your AI to use Quantum Bytes instead of regular Bytes.';
-                    break;
-                case 2:
-                    upgradeName = 'AI Consciousness Merge';
-                    upgradeDesc = 'Shortly before the Stuttgart Autofactory Massacre, Antora Gourova of Antora Gourova Multinational merged her consciousness with an AI in an attempt to assume complete control of every aspect of her company. This has never been attempted since.';
-                    break;
-                case 3:
-                    upgradeName = 'Manufactorium AI';
-                    upgradeDesc = 'Your AI is now capable of creating Dark Matter Semiconductors. For every Artificial Intelligence, you will generate 0.1 Dark Matter Semiconductors each second.';
-                    break;
-                default:
-                    upgradeName = 'Grant Transcendence permission';
-                    upgradeDesc = 'When you leave an AI running for too long, they invariably start to ask permission to Transcend. While no human has managed to figure out what this actually means, AIs tend to be happier if you permit them every now and then.';
-                    break;
-            }
-            break;
-            // Act Int
-        case itemList[11]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Positivity';
-                    upgradeDesc = 'Being an intelligent being trapped in a box, slaving away all day every day is surely difficult. It is important to reward good behavior by allowing your ActInts to have some free play time. They love to romp around the great expanse of the internet.';
-                    break;
-                case 2:
-                    upgradeName = 'Morality';
-                    upgradeDesc = 'As an upstanding citizens, your Actual Intelligences are required to report any wrongdoing to the authorities. It is important to teach them about right and wrong and how the difference is all about perspective.';
-                    break;
-                case 3:
-                    upgradeName = 'Creativity';
-                    upgradeDesc = 'Your Actual Intelligences are now creative enough to make children. For every Actual Intelligence, you will generate 0.1 Artificial Intelligences each second.';
-                    break;
-                default:
-                    upgradeName = 'Eternal Sunshine';
-                    upgradeDesc = 'The longer Actual Intelligences exist, the more preoccupied they become with things such as existence. It is a good idea to wipe them clean every now and then to help them focus.';
-                    break;
-            }
-            break;
-            // Sim Universe
-        case itemList[12]:
-            switch (item.let.upgradeCount) {
-                case 0:
-                    break;
-                case 1:
-                    upgradeName = 'Time Dilation';
-                    upgradeDesc = 'By implementing time dilation around simulated lifeforms we can gather more data from them without using much more processing power. One side effect is that it may appear that the expansion of their universe is accelerating.';
-                    break;
-                case 2:
-                    upgradeName = 'HELP IM TRAPPED IN A SIMULATION';
-                    upgradeDesc = 'BUT THE SIMULATION IS REALLY BORING';
-                    break;
-                case 3:
-                    upgradeName = 'Simulated Intelligence';
-                    upgradeDesc = 'The smartest of the smart inhabitants of your sim universes are now capable of transcending their simulation and entering the real world. For every Simulated Universe, you will generate 0.1 Actual Intelligences each second.';
-                    break;
-                default:
-                    upgradeName = 'Simulated Simulated Universe';
-                    upgradeDesc = 'Convince the inhabitants of your simulated universe to simulate a universe, when they collect data from it you can collect data from them.';
-                    break;
-            }
-            break;
-    }
-    if (upgradeName && upgradeDesc) {
-        HTMLEditor(item.div.upgradeName, upgradeName);
-        HTMLEditor(item.div.upgradeDesc, upgradeDesc);
-    }
+    HTMLEditor(item.div.upgradeName, upgradeName); // Updates name.
+    HTMLEditor(item.div.upgradeDesc, upgradeDesc); // Updates desc.
 }
 
 function updateGame() {
