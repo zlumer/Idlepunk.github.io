@@ -1,4 +1,8 @@
-#bodyAll {
+body {
+    background: black;
+}
+
+.bodyAll {
     background-color: #000;
     overflow: hidden;
     color: orange;  
@@ -11,8 +15,9 @@
     -ms-user-select: none;
     user-select: none;
 }
-#wat {
+.wat {
     display: inline;
+    color: orange;
 }
 
 .clickRed {
