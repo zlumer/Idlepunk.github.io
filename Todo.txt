@@ -9,7 +9,7 @@ Done:
 	Fix font size on large monitors.
 	Change decimal points to 2 (maybe?). When above 1000 bytes.
 	Add trailing zeroes to formatNumbers. When above 1000 bytes.
-	Add more number sizes.
+	Add more number sizes. Now up to 10^150 (novemquadragintillion)
 	Add formatNumbers() for auto buying.
 	Spell check. -Data available. - Affect -> Effect.
 	Add warning for unsupported browsers.

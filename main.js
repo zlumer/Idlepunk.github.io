@@ -284,6 +284,20 @@ function formatNumbers(number, dp = 0) {
         'sextrigintillion',
         'septentrigintillion',
         'octotrigintillion',
+        'novemtrigintillion',
+        'quadragintillion',
+        'unquadragintillion',
+        'novemtrigintillion',
+        'quadragintillion',
+        'unquadragintillion',
+        'duoquadragintillion',
+        'trequadragintillion',
+        'quattuorquadragintillion',
+        'quinquadragintillion',
+        'sexquadragintillion',
+        'septenquadragintillion',
+        'octoquadragintillion',
+        'novemquadragintillion',
         'If you are reading this then you need to tell me to add more number sizes.'];
         const i = Math.floor(Math.log(number) / Math.log(1000));
         let num = parseFloat((number / Math.pow(1000, i)).toFixed(0));
