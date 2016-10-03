@@ -107,7 +107,7 @@ p {
 
 .flex-container {
     display: -webkit-flex;
-    display: flex;
+    display: none;
     width: auto;
     height: auto;
 

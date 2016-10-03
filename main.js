@@ -63,7 +63,8 @@ const itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
         HR          : ID + 'HR',
         upgradeCost : ID + 'UpgradeCost',
         upgradeName : ID + 'UpgradeName',
-        upgradeDesc : ID + 'UpgradeDesc'
+        upgradeDesc : ID + 'UpgradeDesc',
+        itemFlex    : ID + 'Flex'
     };
 };
 
@@ -273,6 +274,7 @@ function checkForReveal() {
         const item = itemList[i]; // It just looks cleaner this way.
         if (totalDataHacked >= item.gameData.baseCost) { // Items are revealed when the all time amount of data surpasses the base cost of the item.
             visibilityLoader(item.div.itemMenu, 1);
+            document.getElementById(item.div.itemFlex).style.display = 'flex';
             visibilityLoader(item.div.HR, 1);
         }
         if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, 1); // An upgrade is revealed when total data is greater than the cost of the upgrade.
