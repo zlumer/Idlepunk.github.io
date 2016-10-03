@@ -186,7 +186,7 @@ function changeTheme(change = true){
     changeClassColor(document.getElementsByClassName('bodyAll'), colorTheme[currentTheme].bodyColor);
     changeClassColor(document.getElementsByClassName('clickRed'), colorTheme[currentTheme].clickColor);
     changeClassColor(document.getElementsByClassName('number'), colorTheme[currentTheme].numberColor);
-
+    document.getElementById('item0HR').style.color = colorTheme[currentTheme].numberColor;
     function changeClassColor(classArray, classColor){
     // Sets an array of elements to a given color.
         for (let i = classArray.length - 1; i >= 0; i--) {
