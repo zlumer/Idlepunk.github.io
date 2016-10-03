@@ -2,11 +2,11 @@
 
 body {
     background: black;
+    overflow: hidden;
 }
 
 .bodyAll {
     background-color: #000;
-    overflow: hidden;
     color: orange;  
     display: none;
     cursor: default;
