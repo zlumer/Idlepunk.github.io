@@ -8,6 +8,8 @@ To do.
 	Add warning for unsupported browsers.
 	Add upgrade text to item objects.
 	Remove total data hacked (maybe?).
+	Make load() check for undefined stuff.
+	Make save() not save things that should be constants.
 Done.
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
