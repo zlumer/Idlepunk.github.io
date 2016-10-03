@@ -1,3 +1,5 @@
+@media(min-width:60em){html{font-size: 100%}}
+
 body {
     background: black;
 }
@@ -14,7 +16,10 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-size: 100%;
+    line-height: 1;
 }
+
 .unsupportedBrowser {
     display: inline;
     color: orange;
