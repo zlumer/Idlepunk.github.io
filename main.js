@@ -220,7 +220,7 @@ function formatNumbers(number, dp = 0) {
     // if it is less than 1 million it shows the normal number.
     // if it is greater than 1 million it shows the number name, e.g. 1.34 million.
     number = Math.round(number);
-    if (number > 99999) {
+    if (number > 9999) {
         const numberSizes = [
         'If you are reading this then you have found a bug! Please contact an exterminator.',
         'thousand',
@@ -321,7 +321,7 @@ function checkForReveal() {
 
 function increment(updateUI = true) {
     // Generates income based on items.
-    let totalIncome = 0; // The total amount for all items for this tic k.
+    let totalIncome = 0; // The total amount for all items for this tick.
 
     for (let i = itemList.length - 1; i >= 0; i--) { // Iterating through loops backwards is more efficient as the array length only has to be calculated once.
         let incomePerItemPerTick; // The amount that a single item will generate in 1 tick.
