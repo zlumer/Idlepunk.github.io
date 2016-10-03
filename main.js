@@ -238,8 +238,8 @@ function formatBytes(bytes) {
 
 function formatNumbers(number, dp = 0) {
     // Converts a number of number into a data format.
-    // if it is less than 1 million it shows the normal number.
-    // if it is greater than 1 million it shows the number name, e.g. 1.34 million.
+    // if it is less than 10000 it shows the normal number.
+    // if it is greater than 10000 it shows the number name, e.g. 1.34 million.
     number = Math.round(number);
     if (number > 9999) {
         // One of these is spelled incorrectly, i'll give you a prize if you work out which one.
@@ -297,7 +297,7 @@ function formatNumbers(number, dp = 0) {
         'sexquadragintillion',
         'septenquadragintillion',
         'octoquadragintillion',
-        'novemquadragintillion',
+        'novemquadragintillion', // Now that is a sweet name for a number.
         'If you are reading this then you need to tell me to add more number sizes.'];
         const i = Math.floor(Math.log(number) / Math.log(1000));
         let num = parseFloat((number / Math.pow(1000, i)).toFixed(0));

@@ -3,12 +3,13 @@ To do:
 	Add upgrade text to item objects.
 	Remove total data hacked (maybe?).
 	Add initial upgrade text to upgrade0
+	Add support for scientific notation instead of named numbers.
 Done:
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
 	Fix font size on large monitors.
 	Change decimal points to 2 (maybe?). When above 1000 bytes.
-	Add trailing zeroes to formatNumbers. When above 1000 bytes.
+	Add trailing zeros to formatNumbers. When above 1000 bytes.
 	Add more number sizes. Now up to 10^150 (novemquadragintillion)
 	Add formatNumbers() for auto buying.
 	Spell check. -Data available. - Affect -> Effect.
