@@ -197,8 +197,8 @@ function destroyFloats(input) {
 function formatBytes(bytes) {
     // Converts a number of Bytes into a data format. E.g. 3000 bytes -> 3KB.
     bytes = Math.round(bytes);
+    let dp = 2;
     if (bytes <= 999999999999999999999999999) { // 1000 YB = 1*10^27 Bytes, this is 1 less than that.
-        let dp = 2;
         if (bytes < 1000) dp = 0;
         if (bytes === 0) return '0 Bytes';
         if (bytes === 1) return '1 Byte';
@@ -215,7 +215,7 @@ function formatBytes(bytes) {
     }
 }
 
-function formatNumbers(number) {
+function formatNumbers(number, dp = 0) {
     // Converts a number of number into a data format.
     // if it is less than 1 million it shows the normal number.
     // if it is greater than 1 million it shows the number name, e.g. 1.34 million.
@@ -264,7 +264,10 @@ function formatNumbers(number) {
         'octotrigintillion',
         'If you are reading this then you need to tell me to add more number sizes.'];
         const i = Math.floor(Math.log(number) / Math.log(1000));
-        return parseFloat((number / Math.pow(1000, i)).toFixed(0)) + ' ' + numberSizes[i];
+        let num = parseFloat((number / Math.pow(1000, i)).toFixed(0));
+        num = num.toFixed(dp);
+        num = num + ' ' + numberSizes[i];
+        return num;
     } 
     else return number; // If the number is smaller than 100k, it just displays it normally.
 }
@@ -311,14 +314,14 @@ function checkForReveal() {
             document.getElementById(item.div.itemFlex).style.display = 'flex';
             visibilityLoader(item.div.HR, true);
         }
-        if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, false); // An upgrade is revealed when total data is greater than the cost of the upgrade.
+        if (totalDataHacked >= item.gameData.nextUpgradeCost) visibilityLoader(item.div.upgradeMenu, true); // An upgrade is revealed when total data is greater than the cost of the upgrade.
         else visibilityLoader(item.div.upgradeMenu, false);
     }
 }
 
 function increment(updateUI = true) {
     // Generates income based on items.
-    let totalIncome = 0; // The total amount for all items for this tick.
+    let totalIncome = 0; // The total amount for all items for this tic k.
 
     for (let i = itemList.length - 1; i >= 0; i--) { // Iterating through loops backwards is more efficient as the array length only has to be calculated once.
         let incomePerItemPerTick; // The amount that a single item will generate in 1 tick.
@@ -362,7 +365,7 @@ function autoBuy(firstItem, secondItem, updateUI = true) {
     const max = maxItem(firstItem);
     // If the requisite upgrade is met and you have less than the max number if items.
     if (secondItem.gameData.upgradeCount >= 4 && firstItem.gameData.itemCount < max) {
-        firstItem.gameData.autoBuyCount += secondItem.gameData.itemCount / (tickRate * 10); // Divide by 100 here but 10 below because there are 10 ticks per second.
+        firstItem.gameData.autoBuyCount += secondItem.gameData.itemCount / (tickRate * 10);
         if (firstItem.gameData.autoBuyCount >= 1){
             firstItem.gameData.itemCount += Math.floor(firstItem.gameData.autoBuyCount); // If autoBuyCount rounds to 1 or more, it will buy.
             firstItem.gameData.autoBuyCount -= Math.floor(firstItem.gameData.autoBuyCount); // Subtracts the amount used to buy. 
@@ -370,7 +373,11 @@ function autoBuy(firstItem, secondItem, updateUI = true) {
         // If autoBuy buys more than the max allowed items, sets the number of items to the max.
         if (firstItem.gameData.itemCount > max) firstItem.gameData.itemCount = max;
         // Updates UI with the rate that items are being auto bought.
-        if (updateUI) HTMLEditor(secondItem.div.autobuyRate, (secondItem.gameData.itemCount / tickRate));
+        const itemsPerSecond = secondItem.gameData.itemCount / tickRate;
+        if (updateUI) {
+            if (itemsPerSecond < 100) HTMLEditor(secondItem.div.autobuyRate, itemsPerSecond.toFixed(1)); // Displays auto buys per second as 3.3 / 1.0
+            else HTMLEditor(secondItem.div.autobuyRate, formatNumbers(itemsPerSecond)); // Displays auto buys per second as 10 million.
+        }
     }
         // If items are not being auto bought, the rate is displayed as 0.
     else if (updateUI) HTMLEditor(secondItem.div.autobuyRate, 0);
