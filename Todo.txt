@@ -1,6 +1,5 @@
 To do:
 	Fix upgrade text order.
-	Spell check. -Data available. - Affect -> Effect.
 	Some bug involving screen jumping up and down, probably caused by number of decimal points changing from 0 to 3 rapidly.
 	Readd import/export.
 	Add warning for unsupported browsers.
@@ -8,6 +7,7 @@ To do:
 	Remove total data hacked (maybe?).
 	Make load() check for undefined stuff.
 	Make save() not save things that should be constants.
+	Make item0 HR change color with theme.
 Done:
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
@@ -16,3 +16,4 @@ Done:
 	Add trailing zeroes to formatNumbers. When above 1000 bytes.
 	Add more number sizes.
 	Add formatNumbers() for auto buying.
+	Spell check. -Data available. - Affect -> Effect.

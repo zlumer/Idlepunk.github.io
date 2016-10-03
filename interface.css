@@ -1,9 +1,6 @@
-body {
+#bodyAll {
     background-color: #000;
     overflow: hidden;
-}
-
-.all {
     color: orange;  
     display: none;
     cursor: default;
@@ -13,6 +10,9 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+#wat {
+    display: inline;
 }
 
 .clickRed {

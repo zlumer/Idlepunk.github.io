@@ -93,7 +93,8 @@ function startUp() {
     dataHacked = BIC;
     totalDataHacked = BIC;
     load(); // Loads the save, remove to disable autoloading on refresh.
-    document.getElementById('all').style.display = 'inline'; // Display is set to none in css to hide the body while loading, this makes it visible.
+    document.getElementById('bodyAll').style.display = 'inline'; // Display is set to none in css to hide the body while loading, this makes it visible.
+    document.getElementById('wat').style.display = 'none';
     // This hides the item menus, HRs and upgrades when the game loads, checkForReveal() with show the relevant ones on the first tick.
     for (let i = itemList.length - 1; i >= 0; i--) { // Iterating backwards is better for performance as length only has to be calculated once.
         const item = itemList[i];
