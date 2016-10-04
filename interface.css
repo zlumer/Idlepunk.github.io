@@ -1,4 +1,7 @@
 @media(min-width:60em){html{font-size: 100%}}
+html {
+    overflow: -moz-scrollbars-none;
+}
 
 body {
     background: black;
@@ -129,9 +132,12 @@ p {
 
 .scroll {
     overflow-y: auto;
-    width: auto;
     height: 70vh;
-    scrollbar-face-color: #b46868;
+}
+
+.FirefoxFix {
+    width: 100vw;
+    overflow: hidden;
 }
 
 ::-webkit-scrollbar {
