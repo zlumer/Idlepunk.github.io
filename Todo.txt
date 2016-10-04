@@ -1,8 +1,6 @@
 To do:
-	Fix upgrade text order.
-	Remove total data hacked (maybe?).
 	Add support for scientific notation instead of named numbers.
-	Things look weird in firefox.
+	Change color of key words in upgrade text.
 Done:
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
@@ -20,4 +18,6 @@ Done:
 	Some bug involving screen jumping up and down, probably caused by number of decimal points changing from 0 to 3 rapidly.
 	Add upgrade text to item objects.
 	Add initial upgrade text to upgrade0
-	
+	Things look weird in firefox.
+	Fix upgrade text order.
+	Remove total data hacked (maybe?).

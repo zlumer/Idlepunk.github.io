@@ -428,7 +428,7 @@ function refreshUI() {
     // Updates most UI elements.
     // Some elements that require heavier calculations or do not need to be updated often are not updated here.
     HTMLEditor('dataHacked', formatBytes(Math.floor(dataHacked)));
-    HTMLEditor('totalDataHacked', formatBytes(Math.floor(totalDataHacked)));
+    //HTMLEditor('totalDataHacked', formatBytes(Math.floor(totalDataHacked)));
     for (let i = itemList.length - 1; i >= 0; i--) {
         const item = itemList[i];
         HTMLEditor(item.div.numberMax, formatNumbers(maxItem(item))); // Max number of items.
