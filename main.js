@@ -44,7 +44,7 @@ const itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
         ID                 : ID, // The identifier, usually prefixed to the name of the HTML Div.
         baseCost           : baseCost, // The initial cost of the item, the future costs are calculated from 
         baseUpgradeCost    : baseUpgradeCost, // The cost of the first upgrade, does not change.
-        baseIncome         : baseCost / 15, // The initial amount of data this generates.
+        baseIncome         : baseCost / 15 // The initial amount of data this generates.
     };
 
     this.let = { // These items should change and be saved to local storage.
@@ -55,39 +55,40 @@ const itemConstructor = function(name, ID, baseCost, baseUpgradeCost) {
     }
     // These are the names of the divs associated with this item in the DOM.
     this.div = {
-        cost        : ID + 'Cost',
-        itemCount   : ID + 'Number',
-        itemRate    : ID + 'Rate',
-        rateTotal   : ID + 'RateTotal',
-        numberMax   : ID + 'NumberMax',
-        autobuyRate : ID + 'CreationRate',
-        itemMenu    : ID + 'Menu',
-        upgradeMenu : ID + 'UpgradeMenu',
-        HR          : ID + 'HR',
-        upgradeCost : ID + 'UpgradeCost',
-        upgradeName : ID + 'UpgradeName',
-        upgradeDesc : ID + 'UpgradeDesc',
-        itemFlex    : ID + 'Flex'
-    };
+        cost            : 'item' + ID + 'Cost',
+        itemCount       : 'item' + ID + 'Number',
+        itemRate        : 'item' + ID + 'Rate',
+        rateTotal       : 'item' + ID + 'RateTotal',
+        numberMax       : 'item' + ID + 'NumberMax',
+        autobuyRate     : 'item' + ID + 'CreationRate',
+        itemMenu        : 'item' + ID + 'Menu',
+        upgradeMenu     : 'item' + ID + 'UpgradeMenu',
+        HR              : 'item' + ID + 'HR',
+        upgradeCost     : 'item' + ID + 'UpgradeCost',
+        upgradeName     : 'item' + ID + 'UpgradeName',
+        upgradeDesc     : 'item' + ID + 'UpgradeDesc',
+        itemFlex        : 'item' + ID + 'Flex',
+        upgradeDetails  : 'item' + ID + 'UpgradeDetails'
+    }
 };
 
 const BIC = 15; // Base item cost.
 const BUC = 11; // Base upgrade cost.
 
 const itemList = [
-    new itemConstructor('Cyberdeck',                  'item0',  Math.pow(BIC, 1),  Math.pow(BUC, 3)),
-    new itemConstructor('ICE Pick',                   'item1',  Math.pow(BIC, 2),  Math.pow(BUC, 4)),
-    new itemConstructor('Botnet',                     'item2',  Math.pow(BIC, 3),  Math.pow(BUC, 5)),
-    new itemConstructor('Femtocell Hijacker',         'item3',  Math.pow(BIC, 4),  Math.pow(BUC, 6)),
-    new itemConstructor('Neural TETRA',               'item4',  Math.pow(BIC, 5),  Math.pow(BUC, 7)),
-    new itemConstructor('Quantum Cryptograph',        'item5',  Math.pow(BIC, 6),  Math.pow(BUC, 8)),
-    new itemConstructor('Infovault Mining',           'item6',  Math.pow(BIC, 7),  Math.pow(BUC, 9)),
-    new itemConstructor('Neural Zombies',             'item7',  Math.pow(BIC, 8),  Math.pow(BUC, 10)),
-    new itemConstructor('Satellite Jumpers',          'item8',  Math.pow(BIC, 9),  Math.pow(BUC, 11)),
-    new itemConstructor('Dark Matter Semiconductors', 'item9',  Math.pow(BIC, 10), Math.pow(BUC, 12)),
-    new itemConstructor('Actual Intelligence',        'item10', Math.pow(BIC, 11), Math.pow(BUC, 13)),
-    new itemConstructor('Artificial Intelligences',   'item11', Math.pow(BIC, 12), Math.pow(BUC, 14)),
-    new itemConstructor('Simulated Universes',        'item12', Math.pow(BIC, 13), Math.pow(BUC, 15))
+    new itemConstructor('Cyberdeck',                    0,  Math.pow(BIC, 1),  Math.pow(BUC, 3)),
+    new itemConstructor('ICE Pick',                     1,  Math.pow(BIC, 2),  Math.pow(BUC, 4)),
+    new itemConstructor('Botnet',                       2,  Math.pow(BIC, 3),  Math.pow(BUC, 5)),
+    new itemConstructor('Femtocell Hijacker',           3,  Math.pow(BIC, 4),  Math.pow(BUC, 6)),
+    new itemConstructor('Neural TETRA',                 4,  Math.pow(BIC, 5),  Math.pow(BUC, 7)),
+    new itemConstructor('Quantum Cryptograph',          5,  Math.pow(BIC, 6),  Math.pow(BUC, 8)),
+    new itemConstructor('Infovault Mining',             6,  Math.pow(BIC, 7),  Math.pow(BUC, 9)),
+    new itemConstructor('Neural Zombies',               7,  Math.pow(BIC, 8),  Math.pow(BUC, 10)),
+    new itemConstructor('Satellite Jumpers',            8,  Math.pow(BIC, 9),  Math.pow(BUC, 11)),
+    new itemConstructor('Dark Matter Semiconductors',   9,  Math.pow(BIC, 10), Math.pow(BUC, 12)),
+    new itemConstructor('Actual Intelligence',          10, Math.pow(BIC, 11), Math.pow(BUC, 13)),
+    new itemConstructor('Artificial Intelligences',     11, Math.pow(BIC, 12), Math.pow(BUC, 14)),
+    new itemConstructor('Simulated Universes',          12, Math.pow(BIC, 13), Math.pow(BUC, 15))
 ];
 
 // 2d arrays of upgrade names and descriptions.
@@ -105,7 +106,7 @@ itemList[1].upgradeText = [
     ['Update to an ICEBREAKER',             'Supposedly developed by legendary netrunner Strange Switch, the ICEBREAKER is the next generation of penetration software.'],
     ['Prepare BLACKICE Countermeasures',    'BLACKICE, originally developed to protect the intellectual assets of Meturia-Preva Consolidated, is now a blanket term for security software capable of killing intruders.'],
     ['Setup Dummy Interface',               'Corporations, particularly those in the Eurasian Economic Zone, are partial to sending assassins after those who steal their data. Setting up a Dummy Interface makes it hard for them to track you down.'],
-    ['Cyberdeck Simulators',                'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every ICE Pick, you will generate 0.1 Cyberdeck each second.'],
+    ['Cyberdeck Simulators',                'Servers that are hacked by your ICE Picks can now host virtual Cyberdecks. For every ICE Pick, you will generate <span class="number">0.1</span> Cyberdeck each second.'],
     ['Write new anti-ICE software',         'ICE defense is ever changing, new ICE picking software is always required.']
 ];
 itemList[2].upgradeText = [
@@ -434,7 +435,7 @@ function refreshUI() {
         HTMLEditor(item.div.numberMax, formatNumbers(maxItem(item))); // Max number of items.
         HTMLEditor(item.div.itemCount, formatNumbers(item.let.itemCount)); // Number of items.
         HTMLEditor(item.div.cost, formatBytes(buyCost(item))); // Item cost.
-        changeUpgradeText(item);
+        changeUpgradeText(itemList[i]);
     }
 }
 
@@ -564,6 +565,12 @@ function changeUpgradeText(item) {
     HTMLEditor(item.div.upgradeCost, formatBytes(item.let.nextUpgradeCost)); // Updates cost.
     HTMLEditor(item.div.upgradeName, upgradeName); // Updates name.
     HTMLEditor(item.div.upgradeDesc, upgradeDesc); // Updates desc.
+
+    if (item != itemList[0]) {
+        const doubling = 'Doubles the income of each ' + item.const.name + '.';
+        const autoBuying = 'For every ' + item.const.name + ' you will generate 0.1 ' + itemList[item.const.ID - 1].const.name + '.';
+        HTMLEditor(item.div.upgradeDetails, doubling + ' ' + autoBuying);
+    }
 }
 
 function updateGame() {

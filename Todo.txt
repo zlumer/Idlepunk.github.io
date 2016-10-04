@@ -1,6 +1,12 @@
 To do:
-	Add support for scientific notation instead of named numbers.
+	Add option for scientific notation instead of named numbers.
 	Change color of key words in upgrade text.
+	Make index.html & interface.css less horrific.
+	Make new upgrade array detailing what each upgrade does.
+	Achievements.
+	Prestige.
+	Add new gameplay mechanics so good that it causes a paradigm shift and I am worshiped as a god for all eternity (maybe?).
+	Get rid of let item = itemList
 Done:
 	Keep data on screen as you scroll down.
 	Make an ID for each flex-container, have them display: none; by default. When revealed, set to display: flex;.
@@ -9,7 +15,7 @@ Done:
 	Add trailing zeros to formatNumbers. When below 1000 bytes.
 	Add more number sizes. Now up to 10^150 (novemquadragintillion)
 	Add formatNumbers() for auto buying.
-	Spell check. -Data available. - Affect -> Effect.
+	Spell check. -Data available. -Affect -> Effect.
 	Add warning for unsupported browsers.
 	Readd import/export.
 	Make load() check for undefined stuff.
